@@ -5,8 +5,8 @@ Tests for search provider normalization and selection.
 import httpx
 import pytest
 
-from searcrawl.local_index import LocalIndex
-from searcrawl.search_providers import (
+from trailsearch.local_index import LocalIndex
+from trailsearch.search_providers import (
     BraveSearchProvider,
     SearchProviderRequest,
     SearXNGSearchProvider,
@@ -108,7 +108,7 @@ def test_create_search_provider_rejects_unknown_provider():
 @pytest.mark.asyncio
 async def test_router_provider_can_use_local_index(tmp_path):
     """Router provider should return local index hits without external APIs."""
-    local_index = LocalIndex(str(tmp_path / "searcrawl.sqlite3"))
+    local_index = LocalIndex(str(tmp_path / "trailsearch.sqlite3"))
     await local_index.initialize()
     try:
         await local_index.upsert_many(

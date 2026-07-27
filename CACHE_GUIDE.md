@@ -2,7 +2,7 @@
 
 ## 概述
 
-Sear-Crawl4AI 现已集成分布式缓存功能，使用 Redis 作为后端存储。该缓存系统支持多个实例共享缓存数据，可以显著减少重复爬取，提高系统性能。
+TrailSearch 现已集成分布式缓存功能，使用 Redis 作为后端存储。该缓存系统支持多个实例共享缓存数据，可以显著减少重复爬取，提高系统性能。
 
 ## 功能特性
 
@@ -222,8 +222,8 @@ CACHE_ENABLED=false
 
 ## 相关文件
 
-- [`src/searcrawl/cache.py`](src/searcrawl/cache.py) - 缓存管理器实现
-- [`src/searcrawl/config.py`](src/searcrawl/config.py) - 缓存配置
-- [`src/searcrawl/crawler.py`](src/searcrawl/crawler.py) - 爬虫集成缓存
-- [`src/searcrawl/main.py`](src/searcrawl/main.py) - API 端点
+- [`src/trailsearch/cache.py`](src/trailsearch/cache.py) - 缓存管理器实现
+- [`src/trailsearch/config.py`](src/trailsearch/config.py) - 缓存配置
+- [`src/trailsearch/crawler.py`](src/trailsearch/crawler.py) - 爬虫集成缓存
+- [`src/trailsearch/main.py`](src/trailsearch/main.py) - API 端点
 - [`docker-compose.yml`](docker-compose.yml) - Docker 配置

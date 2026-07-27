@@ -1,0 +1,114 @@
+name: trailsearch-demo
+
+services:
+  redis:
+    image: ${REDIS_IMAGE:-redis:7-alpine}
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  searxng:
+    image: ${SEARXNG_IMAGE:-ghcr.io/searxng/searxng:latest}
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      SEARXNG_BASE_URL: http://searxng:8080/
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  reader:
+    image: ${READER_IMAGE:-ghcr.io/intergalacticalvariable/reader:latest}
+    volumes:
+      - reader_data:/app/local-storage
+    restart: unless-stopped
+
+  browserless:
+    image: ${BROWSERLESS_IMAGE:-ghcr.io/browserless/chromium:latest}
+    environment:
+      TOKEN: ${BROWSERLESS_TOKEN:-}
+      MAX_CONCURRENT_SESSIONS: ${BROWSER_REMOTE_MAX_CONCURRENCY:-2}
+      PREBOOT_CHROME: "true"
+    shm_size: 1gb
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      args:
+        PYTHON_IMAGE: ${PYTHON_IMAGE:-python:3.11-slim}
+    env_file:
+      - .env.demo
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      SEARXNG_URL: http://searxng:8080
+      LOCAL_INDEX_PATH: /app/data/trailsearch.sqlite3
+      PYTHONDONTWRITEBYTECODE: "1"
+      READER_ENABLED: "true"
+      READER_URL: http://reader:3000
+      READER_URLS: http://reader:3000
+      CRAWL_EXTRACTION_STRATEGY: quality_gated
+      BROWSER_BACKEND: remote
+      BROWSERLESS_WS_URL: ws://browserless:3000
+      BROWSER_LOCAL_FALLBACK_ENABLED: "false"
+    init: true
+    volumes:
+      - app_data:/app/data
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:3000"
+    depends_on:
+      redis:
+        condition: service_healthy
+      searxng:
+        condition: service_healthy
+      reader:
+        condition: service_started
+      browserless:
+        condition: service_started
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:3000/healthz', timeout=3)"
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    profiles:
+      - tunnel
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+      - --token
+      - ${CLOUDFLARE_TUNNEL_TOKEN:-}
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  app_data:
+  reader_data:
+  redis_data:

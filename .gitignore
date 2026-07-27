@@ -104,6 +104,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.demo
 .venv
 env/
 venv/
@@ -145,3 +146,6 @@ cython_debug/
 
 # Project specific
 .spec-workflow/
+data/*.sqlite3
+data/*.sqlite3-shm
+data/*.sqlite3-wal

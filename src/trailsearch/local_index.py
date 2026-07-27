@@ -581,4 +581,4 @@ class LocalIndex:
 
 def default_local_index_path() -> str:
     """Return a docker-friendly default local index path."""
-    return os.path.join(os.getcwd(), "data", "searcrawl.sqlite3")
+    return os.path.join(os.getcwd(), "data", "trailsearch.sqlite3")

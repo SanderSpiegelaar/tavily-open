@@ -1,13 +1,13 @@
-# searCrawl
+# TrailSearch
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
 中文文档 | [English](README.md)
 
-searCrawl 是一个开源的 Tavily-like 搜索、网页内容提取与异步回填服务。它把低成本搜索路由、本地 SQLite FTS 复用、SearXNG、可选 Brave Search 兜底、Redis 缓存、Reader/HTTP/浏览器分阶段提取和异步 backfill 串在一起，让前台请求尽量快返回，难抓页面交给后台重试。
+TrailSearch 是一个自托管的网页搜索、抓取与内容提取 API。它把低成本搜索路由、本地 SQLite FTS 复用、SearXNG、可选 Brave Search 兜底、Redis 缓存、Reader/HTTP/浏览器分阶段提取和异步 backfill 串在一起，让前台请求尽量快返回，难抓页面交给后台重试。
 
-包名和命令行入口是 `searcrawl`；API 同时保留传统 `/search` 响应，并提供 Tavily-like 的 `/tavily/search` 和 `/tavily/extract`。
+包名和命令行入口是 `trailsearch`；API 同时保留传统 `/search` 响应，并提供 Tavily-like 的 `/tavily/search` 和 `/tavily/extract`。
 
 ## 核心特性
 
@@ -42,61 +42,47 @@ client
 
 | 模块 | 作用 |
 |---|---|
-| `src/searcrawl/main.py` | FastAPI 应用、请求模型、路由、Tavily-like 响应组装、生命周期初始化 |
-| `src/searcrawl/search_providers.py` | Local、SearXNG、Brave 和 SearchRouter 搜索提供者 |
-| `src/searcrawl/crawler.py` | 分阶段提取编排和缓存感知的爬取结果 |
-| `src/searcrawl/extractor.py` | 轻量 HTTP/trafilatura 提取路径 |
-| `src/searcrawl/reader.py` | Reader 服务客户端、多端点哈希分发和失败切换 |
-| `src/searcrawl/browser.py` | Obscura、远程 Browserless/CDP、本地 Playwright 兜底 |
-| `src/searcrawl/local_index.py` | SQLite 文档索引、FTS 搜索和本地 backfill 任务存储 |
-| `src/searcrawl/backfill.py` | 后台重试失败爬取任务的 worker |
-| `src/searcrawl/backfill_queue.py` | Redis 分布式 backfill 队列 |
-| `src/searcrawl/service_registry.py` | etcd 服务注册与发现 |
-| `src/searcrawl/cache.py` | Redis crawl/search 缓存 |
-| `src/searcrawl/quality.py` | 内容质量评分、分词和 chunk |
+| `src/trailsearch/main.py` | FastAPI 应用、请求模型、路由、Tavily-like 响应组装、生命周期初始化 |
+| `src/trailsearch/search_providers.py` | Local、SearXNG、Brave 和 SearchRouter 搜索提供者 |
+| `src/trailsearch/crawler.py` | 分阶段提取编排和缓存感知的爬取结果 |
+| `src/trailsearch/extractor.py` | 轻量 HTTP/trafilatura 提取路径 |
+| `src/trailsearch/reader.py` | Reader 服务客户端、多端点哈希分发和失败切换 |
+| `src/trailsearch/browser.py` | Obscura、远程 Browserless/CDP、本地 Playwright 兜底 |
+| `src/trailsearch/local_index.py` | SQLite 文档索引、FTS 搜索和本地 backfill 任务存储 |
+| `src/trailsearch/backfill.py` | 后台重试失败爬取任务的 worker |
+| `src/trailsearch/backfill_queue.py` | Redis 分布式 backfill 队列 |
+| `src/trailsearch/service_registry.py` | etcd 服务注册与发现 |
+| `src/trailsearch/cache.py` | Redis crawl/search 缓存 |
+| `src/trailsearch/quality.py` | 内容质量评分、分词和 chunk |
 
-更详细的架构说明见 [TAVILY_LIKE_ARCHITECTURE.md](TAVILY_LIKE_ARCHITECTURE.md)。
+更详细的架构说明见 [ARCHITECTURE.md](ARCHITECTURE.md)。
 
 ## 快速开始
 
 ### Docker
 
+完整本地栈统一使用 Demo Compose：
+
 ```bash
-cp .env.example .env
-docker compose up -d --build
+cp .env.demo.example .env.demo
+docker compose --env-file .env.demo -f docker-compose.demo.yml up -d --build
 ```
 
-默认 Docker Compose 会启动 Redis、SearXNG 和主 API。
+该命令会启动 API、Redis、SearXNG、Reader 和 Browserless，只向主机暴露 API。
 
 | 服务 | 地址 |
 |---|---|
-| 主 API | `http://localhost:8000` |
-| Swagger UI | `http://localhost:8000/docs` |
-| ReDoc | `http://localhost:8000/redoc` |
-| SearXNG | `http://localhost:8080` |
-| Redis | `localhost:6379` |
+| 主 API | `http://127.0.0.1:8000` |
+| Swagger UI | `http://127.0.0.1:8000/docs` |
+| ReDoc | `http://127.0.0.1:8000/redoc` |
 
-可选 profile：
+配置 `CLOUDFLARE_TUNNEL_TOKEN` 后可启用 Cloudflare Tunnel：
 
 ```bash
-# 启动 Reader 服务，并在 8001 暴露 Reader 版 API
-docker compose --profile reader up -d --build
-
-# 启动 Browserless/CDP，用于远程浏览器兜底
-docker compose --profile browserless up -d --build
-
-# 启动所有可选本地服务
-docker compose --profile full up -d --build
+docker compose --env-file .env.demo -f docker-compose.demo.yml --profile tunnel up -d --build
 ```
 
-Reader profile 地址：
-
-| 服务 | 地址 |
-|---|---|
-| Reader 版 API | `http://localhost:8001` |
-| Reader 服务 | `http://localhost:3001` |
-
-默认 `app` 容器关闭 Reader，并使用 `http_first`，以保持本地栈轻量；`app-reader` profile 会开启 Reader，并使用 `reader_first`。
+根目录 `docker-compose.yml` 仍保留给轻量开发 profile 使用，不要与 `docker-compose.demo.yml` 同时组合启动。
 
 ### 分布式 Compose
 
@@ -113,7 +99,7 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -e ".[dev]"
 cp .env.example .env
-searcrawl
+trailsearch
 ```
 
 macOS/Linux 使用 `source .venv/bin/activate` 激活虚拟环境。命令行本地启动默认监听 `http://0.0.0.0:3000`。
@@ -293,9 +279,9 @@ POST /tavily/extract
 本地运行 benchmark：
 
 ```powershell
-$env:SEARCRAWL_RUN_BENCHMARK = "1"
-$env:SEARCRAWL_BENCHMARK_PRESET = "fast"
-$env:SEARCRAWL_BENCHMARK_OUTPUT = "benchmark-results.json"
+$env:TRAILSEARCH_RUN_BENCHMARK = "1"
+$env:TRAILSEARCH_BENCHMARK_PRESET = "fast"
+$env:TRAILSEARCH_BENCHMARK_OUTPUT = "benchmark-results.json"
 pytest tests/test_benchmark.py -m benchmark -s --no-cov
 python scripts/render_benchmark_report.py benchmark-results.json --markdown benchmark-report.md --html benchmark-report.html
 ```
@@ -304,13 +290,13 @@ python scripts/render_benchmark_report.py benchmark-results.json --markdown benc
 
 | 变量 | 用途 |
 |---|---|
-| `SEARCRAWL_BENCHMARK_PRESET=fast` | HTTP、Reader、Scrapling static 和 Reader pipeline |
-| `SEARCRAWL_BENCHMARK_PRESET=quick` | 增加 local Playwright 对比 |
-| `SEARCRAWL_BENCHMARK_PRESET=browser` | 重点比较浏览器相关 profile |
-| `SEARCRAWL_BENCHMARK_PRESET=all` | 运行所有可用 profile |
-| `SEARCRAWL_BENCHMARK_ROUNDS=3` | 增加测量轮数 |
-| `SEARCRAWL_BENCHMARK_INSTALL_BROWSERS=1` | 允许 benchmark 自动安装缺失的 Playwright 浏览器 |
-| `SEARCRAWL_BENCHMARK_PROFILES=http_extractor,reader_service` | 指定 profile |
+| `TRAILSEARCH_BENCHMARK_PRESET=fast` | HTTP、Reader、Scrapling static 和 Reader pipeline |
+| `TRAILSEARCH_BENCHMARK_PRESET=quick` | 增加 local Playwright 对比 |
+| `TRAILSEARCH_BENCHMARK_PRESET=browser` | 重点比较浏览器相关 profile |
+| `TRAILSEARCH_BENCHMARK_PRESET=all` | 运行所有可用 profile |
+| `TRAILSEARCH_BENCHMARK_ROUNDS=3` | 增加测量轮数 |
+| `TRAILSEARCH_BENCHMARK_INSTALL_BROWSERS=1` | 允许 benchmark 自动安装缺失的 Playwright 浏览器 |
+| `TRAILSEARCH_BENCHMARK_PROFILES=http_extractor,reader_service` | 指定 profile |
 
 可选 Scrapling profile 需要：
 
@@ -324,19 +310,19 @@ scrapling install
 ```bash
 pip install -e ".[dev]"
 pytest
-pytest --cov=searcrawl --cov-report=html
+pytest --cov=trailsearch --cov-report=html
 ruff check src/ tests/
 black src/ tests/
 mypy src/
 ```
 
-Benchmark 测试默认跳过，只有设置 `SEARCRAWL_RUN_BENCHMARK=1` 才会运行。
+Benchmark 测试默认跳过，只有设置 `TRAILSEARCH_RUN_BENCHMARK=1` 才会运行。
 
 ## 项目结构
 
 ```text
 .
-├── src/searcrawl/                  # Python package
+├── src/trailsearch/                  # Python package
 ├── tests/                          # 单元、集成和可选 benchmark 测试
 ├── scripts/                        # Benchmark 报告渲染/合并脚本
 ├── searxng/settings.yml            # 本地 SearXNG 配置
@@ -346,7 +332,7 @@ Benchmark 测试默认跳过，只有设置 `SEARCRAWL_RUN_BENCHMARK=1` 才会�
 ├── .env.example                    # 完整环境变量参考
 ├── CACHE_GUIDE.md                  # 缓存说明
 ├── DOCKER_PROFILES.md              # Compose profile 说明
-├── TAVILY_LIKE_ARCHITECTURE.md     # 架构细节
+├── ARCHITECTURE.md     # 架构细节
 └── benchmark-all-stable-report.md  # 已提交的稳定 benchmark 报告
 ```
 

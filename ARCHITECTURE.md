@@ -97,7 +97,7 @@ For multiple crawler/API nodes, use Redis as the shared backfill queue:
 
 ```env
 BACKFILL_QUEUE_BACKEND=redis
-BACKFILL_REDIS_KEY_PREFIX=searcrawl:backfill
+BACKFILL_REDIS_KEY_PREFIX=trailsearch:backfill
 BACKFILL_CLAIM_TTL_SECONDS=900
 ```
 
@@ -202,5 +202,5 @@ docker compose --profile full up -d --build
 The local SQLite index is persisted in:
 
 ```text
-./data/searcrawl.sqlite3
+./data/trailsearch.sqlite3
 ```

@@ -1,3 +1,5 @@
+name: trailsearch
+
 x-app-base: &app-base
   build:
     context: .
@@ -15,7 +17,7 @@ x-app-base: &app-base
 services:
   redis:
     image: ${REDIS_IMAGE:-public.ecr.aws/docker/library/redis:7-alpine}
-    container_name: searcrawl_redis
+    container_name: trailsearch_redis
     ports:
       - "6379:6379"
     volumes:
@@ -30,14 +32,14 @@ services:
 
   searxng:
     image: ${SEARXNG_IMAGE:-ghcr.io/searxng/searxng:latest}
-    container_name: searcrawl_searxng
+    container_name: trailsearch_searxng
     ports:
       - "8080:8080"
     volumes:
       - ./searxng:/etc/searxng:rw
     environment:
       - SEARXNG_BASE_URL=http://localhost:8080/
-      - SEARXNG_SECRET=${SEARXNG_SECRET:-searcrawl-local-secret-4e864c866431d2a28d752646338ac29f}
+      - SEARXNG_SECRET=${SEARXNG_SECRET:-trailsearch-local-secret-4e864c866431d2a28d752646338ac29f}
     cap_drop:
       - ALL
     cap_add:
@@ -58,7 +60,7 @@ services:
 
   reader:
     image: ${READER_IMAGE:-ghcr.io/intergalacticalvariable/reader:latest}
-    container_name: searcrawl_reader
+    container_name: trailsearch_reader
     profiles:
       - reader
       - full
@@ -70,7 +72,7 @@ services:
 
   browserless:
     image: ${BROWSERLESS_IMAGE:-ghcr.io/browserless/chromium:latest}
-    container_name: searcrawl_browserless
+    container_name: trailsearch_browserless
     profiles:
       - browserless
       - full
@@ -84,7 +86,7 @@ services:
 
   app:
     <<: *app-base
-    container_name: searcrawl_app
+    container_name: trailsearch_app
     ports:
       - "${APP_PORT:-8000}:3000"
     depends_on:
@@ -99,10 +101,10 @@ services:
       - SEARCH_ROUTE_PROVIDERS=${SEARCH_ROUTE_PROVIDERS:-local,searxng,brave}
       - EXTERNAL_SEARCH_ENABLED=${EXTERNAL_SEARCH_ENABLED:-false}
       - LOCAL_INDEX_ENABLED=${LOCAL_INDEX_ENABLED:-true}
-      - LOCAL_INDEX_PATH=${LOCAL_INDEX_PATH:-/app/data/searcrawl.sqlite3}
+      - LOCAL_INDEX_PATH=${LOCAL_INDEX_PATH:-/app/data/trailsearch.sqlite3}
       - BACKFILL_ENABLED=${BACKFILL_ENABLED:-true}
       - BACKFILL_QUEUE_BACKEND=${BACKFILL_QUEUE_BACKEND:-redis}
-      - BACKFILL_REDIS_KEY_PREFIX=${BACKFILL_REDIS_KEY_PREFIX:-searcrawl:backfill}
+      - BACKFILL_REDIS_KEY_PREFIX=${BACKFILL_REDIS_KEY_PREFIX:-trailsearch:backfill}
       - BACKFILL_CLAIM_TTL_SECONDS=${BACKFILL_CLAIM_TTL_SECONDS:-900}
       - BACKFILL_BATCH_SIZE=${BACKFILL_BATCH_SIZE:-3}
       - BACKFILL_WORKER_INTERVAL_SECONDS=${BACKFILL_WORKER_INTERVAL_SECONDS:-30}
@@ -118,7 +120,7 @@ services:
 
   app-reader:
     <<: *app-base
-    container_name: searcrawl_app_reader
+    container_name: trailsearch_app_reader
     ports:
       - "${APP_READER_PORT:-8001}:3000"
     profiles:
@@ -138,10 +140,10 @@ services:
       - SEARCH_ROUTE_PROVIDERS=${SEARCH_ROUTE_PROVIDERS:-local,searxng,brave}
       - EXTERNAL_SEARCH_ENABLED=${EXTERNAL_SEARCH_ENABLED:-false}
       - LOCAL_INDEX_ENABLED=${LOCAL_INDEX_ENABLED:-true}
-      - LOCAL_INDEX_PATH=${LOCAL_INDEX_PATH:-/app/data/searcrawl.sqlite3}
+      - LOCAL_INDEX_PATH=${LOCAL_INDEX_PATH:-/app/data/trailsearch.sqlite3}
       - BACKFILL_ENABLED=${BACKFILL_ENABLED:-true}
       - BACKFILL_QUEUE_BACKEND=${BACKFILL_QUEUE_BACKEND:-redis}
-      - BACKFILL_REDIS_KEY_PREFIX=${BACKFILL_REDIS_KEY_PREFIX:-searcrawl:backfill}
+      - BACKFILL_REDIS_KEY_PREFIX=${BACKFILL_REDIS_KEY_PREFIX:-trailsearch:backfill}
       - BACKFILL_CLAIM_TTL_SECONDS=${BACKFILL_CLAIM_TTL_SECONDS:-900}
       - BACKFILL_BATCH_SIZE=${BACKFILL_BATCH_SIZE:-3}
       - BACKFILL_WORKER_INTERVAL_SECONDS=${BACKFILL_WORKER_INTERVAL_SECONDS:-30}

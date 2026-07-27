@@ -1,3 +1,5 @@
+name: trailsearch-distributed
+
 services:
   redis:
     image: ${REDIS_IMAGE:-public.ecr.aws/docker/library/redis:7-alpine}
@@ -24,7 +26,7 @@ services:
       - --initial-advertise-peer-urls=http://etcd:2380
       - --listen-peer-urls=http://0.0.0.0:2380
       - --initial-cluster=etcd=http://etcd:2380
-      - --initial-cluster-token=searcrawl-etcd
+      - --initial-cluster-token=trailsearch-etcd
       - --initial-cluster-state=new
     ports:
       - "2379:2379"
@@ -80,10 +82,10 @@ services:
       SEARXNG_URL: http://searxng:8080
       SEARCH_PROVIDER: router
       LOCAL_INDEX_ENABLED: "true"
-      LOCAL_INDEX_PATH: /app/data/searcrawl.sqlite3
+      LOCAL_INDEX_PATH: /app/data/trailsearch.sqlite3
       BACKFILL_ENABLED: "true"
       BACKFILL_QUEUE_BACKEND: redis
-      BACKFILL_REDIS_KEY_PREFIX: searcrawl:backfill
+      BACKFILL_REDIS_KEY_PREFIX: trailsearch:backfill
       BACKFILL_CLAIM_TTL_SECONDS: "900"
       READER_ENABLED: "true"
       READER_URLS: http://reader-1:3000,http://reader-2:3000
@@ -91,7 +93,7 @@ services:
       BROWSER_BACKEND: ${BROWSER_BACKEND:-local}
       ETCD_ENABLED: "true"
       ETCD_ENDPOINTS: http://etcd:2379
-      ETCD_NAMESPACE: searcrawl
+      ETCD_NAMESPACE: trailsearch
       ETCD_DISCOVER_READERS: "true"
       ETCD_REGISTER_SELF: "true"
       ETCD_REGISTER_READER_URLS: "true"

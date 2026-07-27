@@ -2,7 +2,7 @@
 Tests for content quality and chunking helpers.
 """
 
-from searcrawl.quality import assess_content_quality, chunk_text
+from trailsearch.quality import assess_content_quality, chunk_text
 
 
 def test_assess_content_quality_accepts_relevant_content():

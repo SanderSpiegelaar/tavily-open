@@ -8,7 +8,7 @@ import json
 import httpx
 import pytest
 
-from searcrawl.service_registry import EtcdServiceRegistry, default_node_endpoint
+from trailsearch.service_registry import EtcdServiceRegistry, default_node_endpoint
 
 
 def _b64(value: str) -> str:

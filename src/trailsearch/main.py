@@ -1,6 +1,4 @@
-"""
-Sear-Crawl4AI - An open-source search and crawling tool based on SearXNG and Crawl4AI.
-"""
+"""TrailSearch - a self-hosted web search, crawl, and content extraction API."""
 
 import asyncio
 import time
@@ -15,11 +13,11 @@ from fastapi import FastAPI, HTTPException
 from loguru import logger
 from pydantic import BaseModel, Field
 
-import searcrawl.logger as log_module
-from searcrawl.backfill import BackfillWorker
-from searcrawl.backfill_queue import RedisBackfillQueue
-from searcrawl.cache import CacheManager
-from searcrawl.config import (
+import trailsearch.logger as log_module
+from trailsearch.backfill import BackfillWorker
+from trailsearch.backfill_queue import RedisBackfillQueue
+from trailsearch.cache import CacheManager
+from trailsearch.config import (
     API_HOST,
     API_PORT,
     BACKFILL_BASE_DELAY_SECONDS,
@@ -33,11 +31,11 @@ from searcrawl.config import (
     BACKFILL_WORKER_INTERVAL_SECONDS,
     CACHE_ENABLED,
     CACHE_TTL_HOURS,
-    DEFAULT_SEARCH_LIMIT,
     DEDUP_CONTENT_ENABLED,
     DEDUP_ENABLED,
     DEDUP_SIMILARITY_THRESHOLD,
     DEDUP_URL_ENABLED,
+    DEFAULT_SEARCH_LIMIT,
     DISABLED_ENGINES,
     ENABLED_ENGINES,
     ETCD_DISCOVER_READERS,
@@ -64,13 +62,13 @@ from searcrawl.config import (
     SEARCH_PROVIDER,
     SEARXNG_TIMEOUT_SECONDS,
 )
-from searcrawl.crawler import WebCrawler
-from searcrawl.deduplication import deduplicate_search_results
-from searcrawl.local_index import LocalIndex, default_local_index_path
-from searcrawl.quality import assess_content_quality, chunk_text, tokenize
-from searcrawl.reader import parse_reader_urls
-from searcrawl.search_providers import SearchProviderRequest, create_search_provider
-from searcrawl.service_registry import (
+from trailsearch.crawler import WebCrawler
+from trailsearch.deduplication import deduplicate_search_results
+from trailsearch.local_index import LocalIndex, default_local_index_path
+from trailsearch.quality import assess_content_quality, chunk_text, tokenize
+from trailsearch.reader import parse_reader_urls
+from trailsearch.search_providers import SearchProviderRequest, create_search_provider
+from trailsearch.service_registry import (
     EtcdServiceRegistry,
     default_node_endpoint,
     default_node_id,
@@ -121,7 +119,7 @@ def _start_service_registration() -> None:
     if service_registry is None or not ETCD_REGISTER_SELF:
         return
 
-    node_id = ETCD_NODE_ID or default_node_id("searcrawl")
+    node_id = ETCD_NODE_ID or default_node_id("trailsearch")
     endpoint = _registry_node_endpoint()
     for service_name in _configured_self_services():
         service_registry.start_registration(
@@ -158,7 +156,7 @@ async def lifespan(app: FastAPI):
     global backfill_queue, backfill_worker, cache_manager, crawler_service, http_semaphore, local_index, page_client, reader_semaphore, reader_session, search_client, service_registry
 
     log_module.setup_logger("INFO")
-    logger.info("Sear-Crawl4AI service starting...")
+    logger.info("TrailSearch service starting...")
 
     if ETCD_ENABLED:
         service_registry = EtcdServiceRegistry(
@@ -259,7 +257,7 @@ async def lifespan(app: FastAPI):
         )
         backfill_worker.start()
     logger.info(f"API service running at: http://{API_HOST}:{API_PORT}")
-    logger.info("Sear-Crawl4AI service startup completed")
+    logger.info("TrailSearch service startup completed")
 
     yield
 
@@ -289,17 +287,25 @@ async def lifespan(app: FastAPI):
     if cache_manager:
         await cache_manager.close()
         cache_manager = None
-    logger.info("Sear-Crawl4AI service shut down")
+    logger.info("TrailSearch service shut down")
 
 
 # Initialize FastAPI application with lifespan
 app = FastAPI(
-    title="Sear-Crawl4AI API",
-    description="An open-source search and crawling tool based on SearXNG and Crawl4AI, "
-    "serving as an open-source alternative to Tavily",
+    title="TrailSearch API",
+    description=(
+        "A self-hosted web search, crawl, and content extraction API with "
+        "Tavily-compatible endpoints."
+    ),
     version="1.0.0",
     lifespan=lifespan,
 )
+
+
+@app.get("/healthz", include_in_schema=False)
+async def healthcheck():
+    """Return a dependency-free liveness signal for container platforms."""
+    return {"status": "ok"}
 
 
 # Request model definitions
@@ -337,6 +343,7 @@ class TavilySearchRequest(BaseModel):
 
     query: str
     max_results: int = Field(default=DEFAULT_SEARCH_LIMIT, ge=1, le=20)
+    mode: Literal["crawl", "search"] = "crawl"
     search_depth: Literal["basic", "advanced"] = "basic"
     include_answer: bool = False
     include_raw_content: bool = False
@@ -1010,6 +1017,7 @@ async def tavily_search(request: TavilySearchRequest):
         SearchRequest(
             query=request.query,
             limit=request.max_results,
+            mode=request.mode,
             provider=request.provider,
             response_format="tavily",
             search_depth=request.search_depth,
@@ -1060,7 +1068,7 @@ async def tavily_extract(request: ExtractRequest):
 
 def main():
     """Main entry point for the application"""
-    logger.info("Starting Sear-Crawl4AI service via command line")
+    logger.info("Starting TrailSearch service via command line")
     uvicorn.run(app, host=API_HOST, port=API_PORT)
 
 

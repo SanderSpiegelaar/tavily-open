@@ -1,3 +1,3 @@
 """
-Tests package for SearCrawl
+Tests package for TrailSearch
 """

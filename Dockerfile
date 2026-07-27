@@ -30,9 +30,9 @@ RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r re
 
 COPY src/ /app/src
 
-ENV LOCAL_INDEX_PATH=/app/data/searcrawl.sqlite3
+ENV LOCAL_INDEX_PATH=/app/data/trailsearch.sqlite3
 ENV PYTHONPATH=/app/src
 
 EXPOSE 3000
 
-CMD ["python", "-m", "searcrawl.main"]
+CMD ["python", "-m", "trailsearch.main"]

@@ -1,13 +1,13 @@
-# searCrawl
+# TrailSearch
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
 [中文文档](README_CN.md) | English
 
-searCrawl is an open-source Tavily-like search, extraction, and crawl backfill service. It combines low-cost search routing, local SQLite FTS reuse, SearXNG, optional Brave Search fallback, Redis caching, Reader/HTTP/browser extraction stages, and asynchronous backfill so foreground requests stay fast while difficult pages are retried later.
+TrailSearch is a self-hosted web search, crawl, and content extraction API. It combines low-cost search routing, local SQLite FTS reuse, SearXNG, optional Brave Search fallback, Redis caching, Reader/HTTP/browser extraction stages, and asynchronous backfill so foreground requests stay fast while difficult pages are retried later.
 
-The package and CLI name are `searcrawl`; the API exposes both the legacy `/search` response and Tavily-like `/tavily/search` and `/tavily/extract` routes.
+The package and CLI name are `trailsearch`; the API exposes both the legacy `/search` response and Tavily-like `/tavily/search` and `/tavily/extract` routes.
 
 ## Highlights
 
@@ -42,61 +42,47 @@ Core modules:
 
 | Module | Role |
 |---|---|
-| `src/searcrawl/main.py` | FastAPI app, request models, routing, Tavily-like response shaping, lifecycle wiring |
-| `src/searcrawl/search_providers.py` | Local, SearXNG, Brave, and router search providers |
-| `src/searcrawl/crawler.py` | Staged extraction orchestration and cache-aware crawl results |
-| `src/searcrawl/extractor.py` | Lightweight HTTP/trafilatura extraction path |
-| `src/searcrawl/reader.py` | Reader service client, multi-endpoint hashing, and failover |
-| `src/searcrawl/browser.py` | Obscura, remote Browserless/CDP, and local Playwright fallback backends |
-| `src/searcrawl/local_index.py` | SQLite document index, FTS search, and local backfill job storage |
-| `src/searcrawl/backfill.py` | Background worker for retrying failed crawl jobs |
-| `src/searcrawl/backfill_queue.py` | Redis-backed distributed backfill queue |
-| `src/searcrawl/service_registry.py` | etcd service registration and discovery |
-| `src/searcrawl/cache.py` | Redis crawl and search cache |
-| `src/searcrawl/quality.py` | Content quality scoring, tokenization, and chunking |
+| `src/trailsearch/main.py` | FastAPI app, request models, routing, Tavily-like response shaping, lifecycle wiring |
+| `src/trailsearch/search_providers.py` | Local, SearXNG, Brave, and router search providers |
+| `src/trailsearch/crawler.py` | Staged extraction orchestration and cache-aware crawl results |
+| `src/trailsearch/extractor.py` | Lightweight HTTP/trafilatura extraction path |
+| `src/trailsearch/reader.py` | Reader service client, multi-endpoint hashing, and failover |
+| `src/trailsearch/browser.py` | Obscura, remote Browserless/CDP, and local Playwright fallback backends |
+| `src/trailsearch/local_index.py` | SQLite document index, FTS search, and local backfill job storage |
+| `src/trailsearch/backfill.py` | Background worker for retrying failed crawl jobs |
+| `src/trailsearch/backfill_queue.py` | Redis-backed distributed backfill queue |
+| `src/trailsearch/service_registry.py` | etcd service registration and discovery |
+| `src/trailsearch/cache.py` | Redis crawl and search cache |
+| `src/trailsearch/quality.py` | Content quality scoring, tokenization, and chunking |
 
-For a deeper architecture note, see [TAVILY_LIKE_ARCHITECTURE.md](TAVILY_LIKE_ARCHITECTURE.md).
+For a deeper architecture note, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Quick Start
 
 ### Docker
 
+For the complete local stack, copy the demo environment and use the dedicated Compose file:
+
 ```bash
-cp .env.example .env
-docker compose up -d --build
+cp .env.demo.example .env.demo
+docker compose --env-file .env.demo -f docker-compose.demo.yml up -d --build
 ```
 
-Default Docker Compose starts Redis, SearXNG, and the main API.
+This starts the API, Redis, SearXNG, Reader, and Browserless as one coherent stack. The API is the only service published to the host.
 
 | Service | URL |
 |---|---|
-| Main API | `http://localhost:8000` |
-| Swagger UI | `http://localhost:8000/docs` |
-| ReDoc | `http://localhost:8000/redoc` |
-| SearXNG | `http://localhost:8080` |
-| Redis | `localhost:6379` |
+| Main API | `http://127.0.0.1:8000` |
+| Swagger UI | `http://127.0.0.1:8000/docs` |
+| ReDoc | `http://127.0.0.1:8000/redoc` |
 
-Optional profiles:
+Enable the optional Cloudflare Tunnel after setting `CLOUDFLARE_TUNNEL_TOKEN`:
 
 ```bash
-# Start a Reader service and a Reader-enabled API on port 8001
-docker compose --profile reader up -d --build
-
-# Start Browserless/CDP for remote browser fallback
-docker compose --profile browserless up -d --build
-
-# Start every optional local service
-docker compose --profile full up -d --build
+docker compose --env-file .env.demo -f docker-compose.demo.yml --profile tunnel up -d --build
 ```
 
-Reader profile URLs:
-
-| Service | URL |
-|---|---|
-| Reader-enabled API | `http://localhost:8001` |
-| Reader service | `http://localhost:3001` |
-
-The default `app` container keeps Reader disabled and uses `http_first` to stay lightweight. The `app-reader` profile enables Reader and uses `reader_first`.
+The base `docker-compose.yml` remains available for lightweight development profiles. Do not combine it with `docker-compose.demo.yml` in the same run.
 
 ### Distributed Compose
 
@@ -113,7 +99,7 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -e ".[dev]"
 cp .env.example .env
-searcrawl
+trailsearch
 ```
 
 On macOS/Linux, activate with `source .venv/bin/activate`. The local CLI runs on `http://0.0.0.0:3000` by default.
@@ -170,6 +156,7 @@ Content-Type: application/json
 {
   "query": "reader benchmark extraction",
   "max_results": 5,
+  "mode": "crawl",
   "search_depth": "basic",
   "include_answer": true,
   "include_raw_content": false,
@@ -181,6 +168,10 @@ Content-Type: application/json
   "topic": "general"
 }
 ```
+
+Set `"mode": "search"` to return provider titles and snippets without fetching result
+pages. The default `"crawl"` mode keeps the full HTTP, Reader, and browser extraction
+pipeline.
 
 Example response fields:
 
@@ -239,7 +230,7 @@ Most settings live in [.env.example](.env.example). Common groups:
 | Extraction | `CRAWL_EXTRACTION_STRATEGY`, `CRAWL_QUALITY_GATE_ENABLED`, `CRAWL_MIN_QUALITY_SCORE` |
 | HTTP stage | `HTTP_EXTRACTOR_ENABLED`, `HTTP_EXTRACTOR_TIMEOUT_SECONDS`, `HTTP_EXTRACTOR_MAX_CONCURRENCY`, `HTTP_EXTRACTOR_MIN_CONTENT_LENGTH` |
 | Reader stage | `READER_ENABLED`, `READER_URL`, `READER_URLS`, `READER_TIMEOUT_SECONDS`, `READER_MAX_CONCURRENCY`, `READER_MIN_CONTENT_LENGTH` |
-| Browser fallback | `BROWSER_BACKEND`, `BROWSERLESS_WS_URL`, `BROWSER_LOCAL_FALLBACK_ENABLED`, `OBSCURA_BINARY` |
+| Browser fallback | `BROWSER_BACKEND`, `BROWSERLESS_WS_URL`, `BROWSER_TEXT_MODE`, `BROWSER_LIGHT_MODE`, `BROWSER_LOCAL_FALLBACK_ENABLED`, `OBSCURA_BINARY` |
 | Backfill | `BACKFILL_ENABLED`, `BACKFILL_QUEUE_BACKEND`, `BACKFILL_BATCH_SIZE`, `BACKFILL_MAX_ATTEMPTS` |
 | Service registry | `ETCD_ENABLED`, `ETCD_ENDPOINTS`, `ETCD_DISCOVER_READERS`, `ETCD_REGISTER_SELF`, `ETCD_REGISTER_READER_URLS` |
 | Anti-crawl | `ANTI_CRAWL_ENABLED`, `ENABLE_USER_AGENT_ROTATION`, `ENABLE_REQUEST_DELAY`, `PROXY_LIST` |
@@ -293,9 +284,9 @@ Takeaways:
 Run a local benchmark:
 
 ```powershell
-$env:SEARCRAWL_RUN_BENCHMARK = "1"
-$env:SEARCRAWL_BENCHMARK_PRESET = "fast"
-$env:SEARCRAWL_BENCHMARK_OUTPUT = "benchmark-results.json"
+$env:TRAILSEARCH_RUN_BENCHMARK = "1"
+$env:TRAILSEARCH_BENCHMARK_PRESET = "fast"
+$env:TRAILSEARCH_BENCHMARK_OUTPUT = "benchmark-results.json"
 pytest tests/test_benchmark.py -m benchmark -s --no-cov
 python scripts/render_benchmark_report.py benchmark-results.json --markdown benchmark-report.md --html benchmark-report.html
 ```
@@ -304,13 +295,13 @@ Useful options:
 
 | Variable | Purpose |
 |---|---|
-| `SEARCRAWL_BENCHMARK_PRESET=fast` | HTTP, Reader, Scrapling static, and Reader pipeline profiles |
-| `SEARCRAWL_BENCHMARK_PRESET=quick` | Adds local Playwright comparison |
-| `SEARCRAWL_BENCHMARK_PRESET=browser` | Focuses on browser-capable profiles |
-| `SEARCRAWL_BENCHMARK_PRESET=all` | Runs all available profiles |
-| `SEARCRAWL_BENCHMARK_ROUNDS=3` | Increase measurement rounds |
-| `SEARCRAWL_BENCHMARK_INSTALL_BROWSERS=1` | Allow benchmark to install missing Playwright browsers |
-| `SEARCRAWL_BENCHMARK_PROFILES=http_extractor,reader_service` | Select explicit profiles |
+| `TRAILSEARCH_BENCHMARK_PRESET=fast` | HTTP, Reader, Scrapling static, and Reader pipeline profiles |
+| `TRAILSEARCH_BENCHMARK_PRESET=quick` | Adds local Playwright comparison |
+| `TRAILSEARCH_BENCHMARK_PRESET=browser` | Focuses on browser-capable profiles |
+| `TRAILSEARCH_BENCHMARK_PRESET=all` | Runs all available profiles |
+| `TRAILSEARCH_BENCHMARK_ROUNDS=3` | Increase measurement rounds |
+| `TRAILSEARCH_BENCHMARK_INSTALL_BROWSERS=1` | Allow benchmark to install missing Playwright browsers |
+| `TRAILSEARCH_BENCHMARK_PROFILES=http_extractor,reader_service` | Select explicit profiles |
 
 Optional Scrapling profiles require:
 
@@ -324,19 +315,19 @@ scrapling install
 ```bash
 pip install -e ".[dev]"
 pytest
-pytest --cov=searcrawl --cov-report=html
+pytest --cov=trailsearch --cov-report=html
 ruff check src/ tests/
 black src/ tests/
 mypy src/
 ```
 
-Benchmark tests are skipped unless `SEARCRAWL_RUN_BENCHMARK=1` is set.
+Benchmark tests are skipped unless `TRAILSEARCH_RUN_BENCHMARK=1` is set.
 
 ## Project Layout
 
 ```text
 .
-├── src/searcrawl/                  # Python package
+├── src/trailsearch/                  # Python package
 ├── tests/                          # Unit, integration, and optional benchmark tests
 ├── scripts/                        # Benchmark report render/merge helpers
 ├── searxng/settings.yml            # Local SearXNG config
@@ -346,7 +337,7 @@ Benchmark tests are skipped unless `SEARCRAWL_RUN_BENCHMARK=1` is set.
 ├── .env.example                    # Complete environment reference
 ├── CACHE_GUIDE.md                  # Cache usage notes
 ├── DOCKER_PROFILES.md              # Compose profile notes
-├── TAVILY_LIKE_ARCHITECTURE.md     # Architecture details
+├── ARCHITECTURE.md     # Architecture details
 └── benchmark-all-stable-report.md  # Checked-in stable benchmark report
 ```
 

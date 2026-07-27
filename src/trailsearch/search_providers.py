@@ -11,7 +11,7 @@ from typing import Protocol
 import httpx
 from loguru import logger
 
-from searcrawl.config import (
+from trailsearch.config import (
     BRAVE_SEARCH_API_BASE,
     BRAVE_SEARCH_API_KEY,
     EXTERNAL_SEARCH_ENABLED,
@@ -26,8 +26,7 @@ from searcrawl.config import (
     SEARXNG_TIMEOUT_SECONDS,
     SEARXNG_URL,
 )
-from searcrawl.local_index import LocalIndex
-
+from trailsearch.local_index import LocalIndex
 
 # Topic to SearXNG engine mapping configuration
 TOPIC_ENGINE_CONFIG = {
@@ -117,7 +116,7 @@ class SearXNGSearchProvider:
         try:
             # Build form data with dynamic time range
             time_range = self._map_days_to_time_range(request.days)
-            
+
             form_data = {
                 "q": request.query,
                 "format": "json",
@@ -127,7 +126,7 @@ class SearXNGSearchProvider:
                 "pageno": "1",
                 "category_general": "1",
             }
-            
+
             # Build enabled_engines based on priority:
             # 1. Explicit enabled_engines overrides everything
             # 2. Topic-based engine selection
@@ -136,13 +135,13 @@ class SearXNGSearchProvider:
                 topic_engines = self._get_engines_for_topic(request.topic)
                 if topic_engines:
                     enabled_engines = topic_engines
-            
+
             headers = {
                 "Cookie": (
                     "disabled_engines="
                     f"{request.disabled_engines};enabled_engines={enabled_engines};method=POST"
                 ),
-                "User-Agent": "Sear-Crawl4AI/1.0.0",
+                "User-Agent": "TrailSearch/1.0.0",
                 "Accept": "*/*",
                 "Connection": "keep-alive",
             }

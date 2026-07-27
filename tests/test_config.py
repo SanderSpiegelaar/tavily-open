@@ -2,7 +2,7 @@
 Tests for config module
 """
 
-from searcrawl.config import get_config_info
+from trailsearch.config import get_config_info
 
 
 def test_get_config_info():

@@ -4,8 +4,8 @@ Tests for dynamic Reader endpoint discovery in the crawler.
 
 import pytest
 
-import searcrawl.crawler as crawler_module
-from searcrawl.crawler import WebCrawler
+import trailsearch.crawler as crawler_module
+from trailsearch.crawler import WebCrawler
 
 
 @pytest.mark.asyncio
@@ -68,3 +68,44 @@ async def test_reader_first_accepts_reader_content_without_quality_gate(monkeypa
     assert len(results) == 1
     assert results[0]["source_stage"] == "reader"
     assert stage_counts["reader_hits"] == 1
+
+
+@pytest.mark.asyncio
+async def test_disabled_browser_backend_skips_anti_crawl_delay(monkeypatch):
+    """A disabled browser stage must not consume the configured random delay."""
+    crawler = WebCrawler()
+    crawler.remote_browser_backend.enabled = False
+
+    async def fail_if_delay_runs():
+        raise AssertionError("disabled browser stage should not delay")
+
+    monkeypatch.setattr(crawler.anti_crawl_config, "apply_delay_async", fail_if_delay_runs)
+    try:
+        results, pending_urls = await crawler._run_browser_stage(
+            crawler.remote_browser_backend,
+            ["https://example.com/page"],
+        )
+    finally:
+        await crawler.close()
+
+    assert results == []
+    assert pending_urls == ["https://example.com/page"]
+
+
+@pytest.mark.asyncio
+async def test_disabled_obscura_backend_skips_anti_crawl_delay(monkeypatch):
+    """A disabled Obscura stage must not consume the configured random delay."""
+    crawler = WebCrawler()
+    crawler.obscura_browser_backend.enabled = False
+
+    async def fail_if_delay_runs():
+        raise AssertionError("disabled Obscura stage should not delay")
+
+    monkeypatch.setattr(crawler.anti_crawl_config, "apply_delay_async", fail_if_delay_runs)
+    try:
+        results, pending_urls = await crawler._run_obscura_stage(["https://example.com/page"])
+    finally:
+        await crawler.close()
+
+    assert results == []
+    assert pending_urls == ["https://example.com/page"]

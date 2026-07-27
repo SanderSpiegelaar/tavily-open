@@ -4,13 +4,13 @@ Tests for the lightweight local SQLite index.
 
 import pytest
 
-from searcrawl.local_index import LocalIndex
+from trailsearch.local_index import LocalIndex
 
 
 @pytest.mark.asyncio
 async def test_local_index_upserts_searches_and_loads_documents(tmp_path):
     """Local index should persist extracted content and return reusable documents."""
-    index = LocalIndex(str(tmp_path / "searcrawl.sqlite3"))
+    index = LocalIndex(str(tmp_path / "trailsearch.sqlite3"))
     await index.initialize()
     try:
         stored_count = await index.upsert_many(
@@ -40,7 +40,7 @@ async def test_local_index_upserts_searches_and_loads_documents(tmp_path):
 @pytest.mark.asyncio
 async def test_local_index_crawl_jobs_retry_and_abandon(tmp_path):
     """Crawl jobs should be claimed, retried with backoff, then abandoned."""
-    index = LocalIndex(str(tmp_path / "searcrawl.sqlite3"))
+    index = LocalIndex(str(tmp_path / "trailsearch.sqlite3"))
     await index.initialize()
     try:
         queued_count = await index.enqueue_crawl_jobs(
@@ -79,7 +79,7 @@ async def test_local_index_crawl_jobs_retry_and_abandon(tmp_path):
 @pytest.mark.asyncio
 async def test_reenqueue_does_not_reset_failed_backoff(tmp_path):
     """A failed job should keep its delayed next run when the same URL is re-enqueued."""
-    index = LocalIndex(str(tmp_path / "searcrawl.sqlite3"))
+    index = LocalIndex(str(tmp_path / "trailsearch.sqlite3"))
     await index.initialize()
     try:
         await index.enqueue_crawl_jobs(
@@ -112,7 +112,7 @@ async def test_reenqueue_does_not_reset_failed_backoff(tmp_path):
 @pytest.mark.asyncio
 async def test_local_index_loads_crawl_jobs_by_url(tmp_path):
     """Local index should expose active job state for foreground skip decisions."""
-    index = LocalIndex(str(tmp_path / "searcrawl.sqlite3"))
+    index = LocalIndex(str(tmp_path / "trailsearch.sqlite3"))
     await index.initialize()
     try:
         await index.enqueue_crawl_jobs(

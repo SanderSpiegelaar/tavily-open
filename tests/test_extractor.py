@@ -2,7 +2,7 @@
 Tests for lightweight HTTP extraction helpers.
 """
 
-from searcrawl.extractor import (
+from trailsearch.extractor import (
     extract_markdown_from_html,
     is_content_usable,
     looks_like_shell_page,

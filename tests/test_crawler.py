@@ -4,7 +4,7 @@ Tests for crawler module
 
 import pytest
 
-from searcrawl.crawler import WebCrawler
+from trailsearch.crawler import WebCrawler
 
 
 def test_markdown_to_text_regex():

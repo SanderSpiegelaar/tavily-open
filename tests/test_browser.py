@@ -4,8 +4,8 @@ Tests for browser-backed extraction helpers.
 
 import pytest
 
-from searcrawl.anti_crawl import AntiCrawlConfig
-from searcrawl.browser import BrowserBackend, ObscuraBrowserBackend
+from trailsearch.anti_crawl import AntiCrawlConfig
+from trailsearch.browser import BrowserBackend, ObscuraBrowserBackend
 
 
 class _MarkdownResult:

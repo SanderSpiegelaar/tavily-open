@@ -75,7 +75,7 @@ async def fetch_with_http_extractor(
                 timeout=httpx.Timeout(timeout_seconds),
                 follow_redirects=True,
                 headers={
-                    "User-Agent": "SearCrawl/1.0",
+                    "User-Agent": "TrailSearch/1.0",
                     "Accept": "text/html,application/xhtml+xml",
                 },
             )

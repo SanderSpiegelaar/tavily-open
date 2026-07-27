@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "searcrawl"
+name = "trailsearch"
 version = "1.0.0"
-description = "An open-source search and crawling tool based on SearXNG and Crawl4AI"
+description = "A self-hosted web search, crawl, and content extraction API"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
-    {name = "SearCrawl Contributors"}
+    {name = "TrailSearch Contributors"}
 ]
 keywords = ["search", "crawler", "searxng", "crawl4ai", "web scraping"]
 classifiers = [
@@ -54,12 +54,12 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Owoui/SearXNG-Crawl4AI"
-Repository = "https://github.com/Owoui/SearXNG-Crawl4AI"
-"Bug Tracker" = "https://github.com/Owoui/SearXNG-Crawl4AI/issues"
+Homepage = "https://github.com/jianjungki/TrailSearch"
+Repository = "https://github.com/jianjungki/TrailSearch"
+"Bug Tracker" = "https://github.com/jianjungki/TrailSearch/issues"
 
 [project.scripts]
-searcrawl = "searcrawl.main:main"
+trailsearch = "trailsearch.main:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -143,7 +143,7 @@ addopts = [
     "-ra",
     "--strict-markers",
     "--strict-config",
-    "--cov=searcrawl",
+    "--cov=trailsearch",
     "--cov-report=term-missing",
     "--cov-report=html",
 ]

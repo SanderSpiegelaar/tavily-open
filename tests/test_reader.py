@@ -2,7 +2,7 @@
 Tests for reader helpers.
 """
 
-from searcrawl.reader import build_reader_api_url, ordered_reader_urls, parse_reader_urls
+from trailsearch.reader import build_reader_api_url, ordered_reader_urls, parse_reader_urls
 
 
 def test_build_reader_api_url_encodes_target_url():

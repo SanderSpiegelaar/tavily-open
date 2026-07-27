@@ -28,12 +28,16 @@ class BrowserBackend:
         cdp_url: str = "",
         enabled: bool = True,
         install_local_browser: bool = False,
+        text_mode: bool = False,
+        light_mode: bool = False,
     ) -> None:
         self.name = name
         self.anti_crawl_config = anti_crawl_config
         self.cdp_url = cdp_url
         self.enabled = enabled
         self.install_local_browser = install_local_browser
+        self.text_mode = text_mode
+        self.light_mode = light_mode
         self.semaphore = asyncio.Semaphore(max(1, max_concurrency))
 
     async def _ensure_local_browser_installed(self) -> None:
@@ -71,6 +75,8 @@ class BrowserBackend:
                 cdp_url=self.cdp_url,
                 headers=headers if headers else {},
                 proxy=proxy if proxy else "",
+                text_mode=self.text_mode,
+                light_mode=self.light_mode,
             )
 
         return BrowserConfig(
@@ -79,6 +85,8 @@ class BrowserBackend:
             extra_args=extra_args,
             headers=headers if headers else {},
             proxy=proxy if proxy else "",
+            text_mode=self.text_mode,
+            light_mode=self.light_mode,
         )
 
     async def fetch_urls(

@@ -25,10 +25,12 @@ from .cache import CacheManager
 from .config import (
     ANTI_CRAWL_ENABLED,
     BROWSER_BACKEND,
+    BROWSER_LIGHT_MODE,
     BROWSER_LOCAL_FALLBACK_ENABLED,
     BROWSER_LOCAL_MAX_CONCURRENCY,
     BROWSER_REMOTE_MAX_CONCURRENCY,
     BROWSER_REMOTE_TIMEOUT_SECONDS,
+    BROWSER_TEXT_MODE,
     BROWSERLESS_WS_URL,
     CONTENT_FILTER_THRESHOLD,
     CRAWL_EXTRACTION_STRATEGY,
@@ -113,6 +115,8 @@ class WebCrawler:
             enabled=BROWSER_BACKEND in {"remote", "hybrid"} and bool(BROWSERLESS_WS_URL),
             cdp_url=BROWSERLESS_WS_URL,
             max_concurrency=BROWSER_REMOTE_MAX_CONCURRENCY,
+            text_mode=BROWSER_TEXT_MODE,
+            light_mode=BROWSER_LIGHT_MODE,
         )
         self.local_browser_backend = BrowserBackend(
             name="local",
@@ -120,6 +124,8 @@ class WebCrawler:
             enabled=BROWSER_BACKEND in {"local", "hybrid"} and BROWSER_LOCAL_FALLBACK_ENABLED,
             max_concurrency=BROWSER_LOCAL_MAX_CONCURRENCY,
             install_local_browser=True,
+            text_mode=BROWSER_TEXT_MODE,
+            light_mode=BROWSER_LIGHT_MODE,
         )
         logger.info("Initializing WebCrawler instance")
         logger.info(f"Anti-crawl configuration: {self.anti_crawl_config.to_dict()}")
@@ -268,7 +274,7 @@ class WebCrawler:
 
             headers = {
                 "Cookie": f"disabled_engines={disabled_engines};enabled_engines={enabled_engines};method=POST",
-                "User-Agent": "Sear-Crawl4AI/1.0.0",
+                "User-Agent": "TrailSearch/1.0.0",
                 "Accept": "*/*",
                 "Connection": "keep-alive",
             }
@@ -434,7 +440,7 @@ class WebCrawler:
         backend: BrowserBackend,
         urls: list[str],
     ) -> tuple[list[dict[str, str]], list[str]]:
-        if not urls:
+        if not urls or not backend.enabled:
             return [], urls
 
         if ANTI_CRAWL_ENABLED and self.anti_crawl_config.enable_request_delay:
@@ -458,7 +464,7 @@ class WebCrawler:
         self,
         urls: list[str],
     ) -> tuple[list[dict[str, str]], list[str]]:
-        if not urls:
+        if not urls or not self.obscura_browser_backend.enabled:
             return [], urls
 
         if ANTI_CRAWL_ENABLED and self.anti_crawl_config.enable_request_delay:

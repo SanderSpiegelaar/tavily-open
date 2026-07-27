@@ -59,13 +59,13 @@ class EtcdServiceRegistry:
     def __init__(
         self,
         endpoints: str,
-        namespace: str = "searcrawl",
+        namespace: str = "trailsearch",
         ttl_seconds: int = 30,
         refresh_seconds: float = 10.0,
         client: httpx.AsyncClient | None = None,
     ) -> None:
         self.endpoints = [endpoint.strip().rstrip("/") for endpoint in endpoints.split(",") if endpoint.strip()]
-        self.namespace = namespace.strip("/ ") or "searcrawl"
+        self.namespace = namespace.strip("/ ") or "trailsearch"
         self.ttl_seconds = ttl_seconds
         self.refresh_seconds = refresh_seconds
         self.client = client
@@ -98,7 +98,7 @@ class EtcdServiceRegistry:
         """Start periodic lease-backed registration."""
         task = asyncio.create_task(
             self._registration_loop(service, node_id, endpoint, metadata or {}),
-            name=f"searcrawl-registry-{service}-{node_id}",
+            name=f"trailsearch-registry-{service}-{node_id}",
         )
         self._tasks.append(task)
 

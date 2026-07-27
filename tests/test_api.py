@@ -5,7 +5,7 @@ Tests for API endpoints
 import pytest
 from fastapi.testclient import TestClient
 
-from searcrawl.main import app
+from trailsearch.main import app
 
 
 @pytest.fixture
@@ -37,3 +37,14 @@ def test_api_docs_accessible(client):
 
     response = client.get("/openapi.json")
     assert response.status_code == 200
+    schema = response.json()
+    assert schema["info"]["title"] == "TrailSearch API"
+    assert "Tavily-compatible endpoints" in schema["info"]["description"]
+
+
+def test_healthcheck(client):
+    """Container platforms can probe the API without external dependencies."""
+    response = client.get("/healthz")
+
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}

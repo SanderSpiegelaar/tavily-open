@@ -9,8 +9,8 @@ from typing import Any
 
 from loguru import logger
 
-from searcrawl.crawler import WebCrawler
-from searcrawl.local_index import CrawlJob, LocalIndex
+from trailsearch.crawler import WebCrawler
+from trailsearch.local_index import CrawlJob, LocalIndex
 
 
 class BackfillWorker:
@@ -43,7 +43,7 @@ class BackfillWorker:
         if self._task and not self._task.done():
             return
         self._stop_event.clear()
-        self._task = asyncio.create_task(self._run_loop(), name="searcrawl-backfill-worker")
+        self._task = asyncio.create_task(self._run_loop(), name="trailsearch-backfill-worker")
         logger.info("Backfill worker started")
 
     def is_running(self) -> bool:

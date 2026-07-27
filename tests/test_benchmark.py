@@ -2,26 +2,26 @@ r"""
 Optional crawler benchmarks for objective extraction-stage comparison.
 
 Run a quick, lightweight pass:
-    $env:SEARCRAWL_RUN_BENCHMARK="1"
-    $env:SEARCRAWL_BENCHMARK_PRESET="fast"
+    $env:TRAILSEARCH_RUN_BENCHMARK="1"
+    $env:TRAILSEARCH_BENCHMARK_PRESET="fast"
     .venv\Scripts\pytest.exe tests/test_benchmark.py -m benchmark -s --no-cov
 
 Run a short browser comparison after Chromium is installed:
-    $env:SEARCRAWL_RUN_BENCHMARK="1"
-    $env:SEARCRAWL_BENCHMARK_PRESET="quick"
+    $env:TRAILSEARCH_RUN_BENCHMARK="1"
+    $env:TRAILSEARCH_BENCHMARK_PRESET="quick"
     .venv\Scripts\pytest.exe tests/test_benchmark.py -m benchmark -s --no-cov
 
 Allow the benchmark to install missing Playwright browsers:
-    $env:SEARCRAWL_BENCHMARK_INSTALL_BROWSERS="1"
+    $env:TRAILSEARCH_BENCHMARK_INSTALL_BROWSERS="1"
 
 Install optional Scrapling profiles:
     .venv\Scripts\pip.exe install "scrapling[fetchers]"
     .venv\Scripts\scrapling.exe install
 
 Run all profiles, including heavier browser fallbacks:
-    $env:SEARCRAWL_RUN_BENCHMARK="1"
-    $env:SEARCRAWL_BENCHMARK_PRESET="all"
-    $env:SEARCRAWL_BENCHMARK_ROUNDS="3"
+    $env:TRAILSEARCH_RUN_BENCHMARK="1"
+    $env:TRAILSEARCH_BENCHMARK_PRESET="all"
+    $env:TRAILSEARCH_BENCHMARK_ROUNDS="3"
     .venv\Scripts\pytest.exe tests/test_benchmark.py -m benchmark -s --no-cov
 """
 
@@ -44,38 +44,38 @@ import httpx
 import pytest
 from aiohttp import web
 
-from searcrawl.anti_crawl import AntiCrawlConfig
-from searcrawl.crawler import WebCrawler
-from searcrawl.extractor import fetch_with_http_extractor
-from searcrawl.reader import build_reader_api_url
+from trailsearch.anti_crawl import AntiCrawlConfig
+from trailsearch.crawler import WebCrawler
+from trailsearch.extractor import fetch_with_http_extractor
+from trailsearch.reader import build_reader_api_url
 
-RUN_BENCHMARK = os.getenv("SEARCRAWL_RUN_BENCHMARK", "").lower() in {"1", "true", "yes"}
-RUN_REAL_BENCHMARK = os.getenv("SEARCRAWL_RUN_REAL_BENCHMARK", "").lower() in {
+RUN_BENCHMARK = os.getenv("TRAILSEARCH_RUN_BENCHMARK", "").lower() in {"1", "true", "yes"}
+RUN_REAL_BENCHMARK = os.getenv("TRAILSEARCH_RUN_REAL_BENCHMARK", "").lower() in {
     "1",
     "true",
     "yes",
 }
-BENCHMARK_ROUNDS = int(os.getenv("SEARCRAWL_BENCHMARK_ROUNDS", "2"))
-BENCHMARK_OUTPUT = os.getenv("SEARCRAWL_BENCHMARK_OUTPUT", "benchmark-results.json")
-BENCHMARK_PRESET = os.getenv("SEARCRAWL_BENCHMARK_PRESET", "fast").lower().strip()
+BENCHMARK_ROUNDS = int(os.getenv("TRAILSEARCH_BENCHMARK_ROUNDS", "2"))
+BENCHMARK_OUTPUT = os.getenv("TRAILSEARCH_BENCHMARK_OUTPUT", "benchmark-results.json")
+BENCHMARK_PRESET = os.getenv("TRAILSEARCH_BENCHMARK_PRESET", "fast").lower().strip()
 BENCHMARK_INSTALL_BROWSERS = os.getenv(
-    "SEARCRAWL_BENCHMARK_INSTALL_BROWSERS",
+    "TRAILSEARCH_BENCHMARK_INSTALL_BROWSERS",
     "",
 ).lower() in {"1", "true", "yes"}
-REAL_BENCHMARK_ROUNDS = int(os.getenv("SEARCRAWL_REAL_BENCHMARK_ROUNDS", "2"))
+REAL_BENCHMARK_ROUNDS = int(os.getenv("TRAILSEARCH_REAL_BENCHMARK_ROUNDS", "2"))
 REAL_BENCHMARK_OUTPUT = os.getenv(
-    "SEARCRAWL_REAL_BENCHMARK_OUTPUT",
+    "TRAILSEARCH_REAL_BENCHMARK_OUTPUT",
     "realworld-benchmark-results.json",
 )
-MIN_CONTENT_LENGTH = int(os.getenv("SEARCRAWL_BENCHMARK_MIN_CONTENT_LENGTH", "120"))
+MIN_CONTENT_LENGTH = int(os.getenv("TRAILSEARCH_BENCHMARK_MIN_CONTENT_LENGTH", "120"))
 BENCHMARK_PROFILES = {
     profile.strip()
-    for profile in os.getenv("SEARCRAWL_BENCHMARK_PROFILES", "").split(",")
+    for profile in os.getenv("TRAILSEARCH_BENCHMARK_PROFILES", "").split(",")
     if profile.strip()
 }
 REAL_BENCHMARK_PROFILES = {
     profile.strip()
-    for profile in os.getenv("SEARCRAWL_REAL_BENCHMARK_PROFILES", "").split(",")
+    for profile in os.getenv("TRAILSEARCH_REAL_BENCHMARK_PROFILES", "").split(",")
     if profile.strip()
 }
 
@@ -358,7 +358,7 @@ def _docs_expected_text(case_id: str) -> str:
         [
             f"Benchmark Docs {case_id}",
             f"GOLD-DOCS-PRIMARY_{case_id} installation guidance for crawler benchmark users.",
-            f"GOLD-DOCS-CODE_{case_id} searcrawl benchmark --profile quick",
+            f"GOLD-DOCS-CODE_{case_id} trailsearch benchmark --profile quick",
             f"GOLD-DOCS-SECONDARY_{case_id} configuration details with stable option descriptions.",
         ]
     )
@@ -373,7 +373,7 @@ def _docs_html(case_id: str) -> str:
           <article>
             <h1>Benchmark Docs {case_id}</h1>
             <p>GOLD-DOCS-PRIMARY_{case_id} installation guidance for crawler benchmark users.</p>
-            <pre><code>GOLD-DOCS-CODE_{case_id} searcrawl benchmark --profile quick</code></pre>
+            <pre><code>GOLD-DOCS-CODE_{case_id} trailsearch benchmark --profile quick</code></pre>
             <p>GOLD-DOCS-SECONDARY_{case_id} configuration details with stable option descriptions.</p>
           </article>
         </main>
@@ -386,7 +386,7 @@ def _product_expected_text(case_id: str) -> str:
     return "\n".join(
         [
             f"Benchmark Product {case_id}",
-            f"GOLD-PRODUCT-NAME_{case_id} SearCrawl Test Jacket",
+            f"GOLD-PRODUCT-NAME_{case_id} TrailSearch Test Jacket",
             f"GOLD-PRODUCT-PRICE_{case_id} 129.00",
             f"GOLD-PRODUCT-DESCRIPTION_{case_id} structured product copy with material and availability facts.",
         ]
@@ -398,7 +398,7 @@ def _product_html(case_id: str) -> str:
     <html>
       <head>
         <script type="application/ld+json">
-        {{"@type":"Product","name":"GOLD-PRODUCT-NAME_{case_id} SearCrawl Test Jacket",
+        {{"@type":"Product","name":"GOLD-PRODUCT-NAME_{case_id} TrailSearch Test Jacket",
         "offers":{{"price":"GOLD-PRODUCT-PRICE_{case_id} 129.00"}}}}
         </script>
       </head>
@@ -407,7 +407,7 @@ def _product_html(case_id: str) -> str:
         <main>
           <section>
             <h1>Benchmark Product {case_id}</h1>
-            <p>GOLD-PRODUCT-NAME_{case_id} SearCrawl Test Jacket</p>
+            <p>GOLD-PRODUCT-NAME_{case_id} TrailSearch Test Jacket</p>
             <p>GOLD-PRODUCT-PRICE_{case_id} 129.00</p>
             <p>GOLD-PRODUCT-DESCRIPTION_{case_id} structured product copy with material and availability facts.</p>
           </section>
@@ -1152,8 +1152,8 @@ async def _crawler_profile_runner(
     reader_enabled: bool,
     reader_url: Optional[str] = None,
 ) -> dict[str, Any]:
-    import searcrawl.crawler as crawler_module
-    import searcrawl.reader as reader_module
+    import trailsearch.crawler as crawler_module
+    import trailsearch.reader as reader_module
 
     monkeypatch.setattr(crawler_module, "HTTP_EXTRACTOR_ENABLED", http_enabled)
     monkeypatch.setattr(crawler_module, "READER_ENABLED", reader_enabled)
@@ -1244,7 +1244,7 @@ def _default_benchmark_profile_names() -> set[str]:
     }
     if BENCHMARK_PRESET not in presets:
         pytest.fail(
-            "SEARCRAWL_BENCHMARK_PRESET must be one of: "
+            "TRAILSEARCH_BENCHMARK_PRESET must be one of: "
             f"{', '.join(sorted(presets))}"
         )
     return presets[BENCHMARK_PRESET]
@@ -1371,7 +1371,7 @@ def _position_profile(profile: dict[str, Any]) -> str:
 async def test_crawler_stage_benchmark(monkeypatch):
     """Benchmark crawler stages and write a JSON report for ranking extraction priorities."""
     if not RUN_BENCHMARK:
-        pytest.skip("Set SEARCRAWL_RUN_BENCHMARK=1 to run crawler benchmarks")
+        pytest.skip("Set TRAILSEARCH_RUN_BENCHMARK=1 to run crawler benchmarks")
 
     anti_crawl_config = AntiCrawlConfig(
         enable_proxy_rotation=False,
@@ -1465,7 +1465,7 @@ async def test_crawler_stage_benchmark(monkeypatch):
                     name="local_playwright",
                     description=(
                         "Crawl4AI local Playwright browser fallback; benchmark does not install "
-                        "missing browsers unless SEARCRAWL_BENCHMARK_INSTALL_BROWSERS=1."
+                        "missing browsers unless TRAILSEARCH_BENCHMARK_INSTALL_BROWSERS=1."
                     ),
                     runner=lambda urls: _crawler_profile_runner(
                         local_browser_crawler,
@@ -1505,7 +1505,7 @@ async def test_crawler_stage_benchmark(monkeypatch):
             profiles = _select_profiles(
                 profiles,
                 selected_profile_names,
-                "SEARCRAWL_BENCHMARK_PROFILES",
+                "TRAILSEARCH_BENCHMARK_PROFILES",
             )
 
             profile_reports = [
@@ -1561,7 +1561,7 @@ async def test_crawler_stage_benchmark(monkeypatch):
 async def test_real_world_crawler_benchmark(monkeypatch):
     """Benchmark representative public sites with weak-gold quality checks."""
     if not RUN_REAL_BENCHMARK:
-        pytest.skip("Set SEARCRAWL_RUN_REAL_BENCHMARK=1 to run real-world benchmarks")
+        pytest.skip("Set TRAILSEARCH_RUN_REAL_BENCHMARK=1 to run real-world benchmarks")
 
     anti_crawl_config = AntiCrawlConfig(
         enable_proxy_rotation=False,
@@ -1576,7 +1576,7 @@ async def test_real_world_crawler_benchmark(monkeypatch):
     async with httpx.AsyncClient(
         timeout=httpx.Timeout(15.0),
         follow_redirects=True,
-        headers={"User-Agent": "SearCrawl-Benchmark/1.0"},
+        headers={"User-Agent": "TrailSearch-Benchmark/1.0"},
     ) as page_client:
         obscura_crawler = _create_browser_crawler(anti_crawl_config, "obscura")
         local_browser_crawler = _create_browser_crawler(anti_crawl_config, "local")
@@ -1639,7 +1639,7 @@ async def test_real_world_crawler_benchmark(monkeypatch):
         profiles = _select_profiles(
             profiles,
             REAL_BENCHMARK_PROFILES,
-            "SEARCRAWL_REAL_BENCHMARK_PROFILES",
+            "TRAILSEARCH_REAL_BENCHMARK_PROFILES",
         )
 
         profile_reports = [

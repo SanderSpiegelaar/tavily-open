@@ -60,6 +60,8 @@ BROWSER_BACKEND = os.getenv("BROWSER_BACKEND", "local").lower()
 BROWSERLESS_WS_URL = os.getenv("BROWSERLESS_WS_URL", "").strip()
 BROWSER_REMOTE_TIMEOUT_SECONDS = float(os.getenv("BROWSER_REMOTE_TIMEOUT_SECONDS", "45"))
 BROWSER_REMOTE_MAX_CONCURRENCY = int(os.getenv("BROWSER_REMOTE_MAX_CONCURRENCY", "2"))
+BROWSER_TEXT_MODE = os.getenv("BROWSER_TEXT_MODE", "false").lower() == "true"
+BROWSER_LIGHT_MODE = os.getenv("BROWSER_LIGHT_MODE", "false").lower() == "true"
 BROWSER_LOCAL_FALLBACK_ENABLED = (
     os.getenv("BROWSER_LOCAL_FALLBACK_ENABLED", "true").lower() == "true"
 )
@@ -117,7 +119,7 @@ BACKFILL_ENABLED = os.getenv("BACKFILL_ENABLED", "true").lower() == "true"
 BACKFILL_QUEUE_BACKEND = os.getenv("BACKFILL_QUEUE_BACKEND", "redis").strip().lower()
 BACKFILL_REDIS_KEY_PREFIX = os.getenv(
     "BACKFILL_REDIS_KEY_PREFIX",
-    "searcrawl:backfill",
+    "trailsearch:backfill",
 ).strip()
 BACKFILL_CLAIM_TTL_SECONDS = int(os.getenv("BACKFILL_CLAIM_TTL_SECONDS", "900"))
 BACKFILL_BATCH_SIZE = int(os.getenv("BACKFILL_BATCH_SIZE", "3"))
@@ -129,7 +131,7 @@ BACKFILL_MAX_DELAY_SECONDS = float(os.getenv("BACKFILL_MAX_DELAY_SECONDS", "8640
 # Service Registry Configuration
 ETCD_ENABLED = os.getenv("ETCD_ENABLED", "false").lower() == "true"
 ETCD_ENDPOINTS = os.getenv("ETCD_ENDPOINTS", "http://etcd:2379").strip()
-ETCD_NAMESPACE = os.getenv("ETCD_NAMESPACE", "searcrawl").strip()
+ETCD_NAMESPACE = os.getenv("ETCD_NAMESPACE", "trailsearch").strip()
 ETCD_TTL_SECONDS = int(os.getenv("ETCD_TTL_SECONDS", "30"))
 ETCD_REFRESH_SECONDS = float(os.getenv("ETCD_REFRESH_SECONDS", "10"))
 ETCD_NODE_ID = os.getenv("ETCD_NODE_ID", "").strip()
@@ -201,6 +203,8 @@ def get_config_info() -> dict[str, Any]:
             "browserless_ws_url": BROWSERLESS_WS_URL,
             "remote_timeout_seconds": BROWSER_REMOTE_TIMEOUT_SECONDS,
             "remote_max_concurrency": BROWSER_REMOTE_MAX_CONCURRENCY,
+            "text_mode": BROWSER_TEXT_MODE,
+            "light_mode": BROWSER_LIGHT_MODE,
             "local_fallback_enabled": BROWSER_LOCAL_FALLBACK_ENABLED,
             "local_max_concurrency": BROWSER_LOCAL_MAX_CONCURRENCY,
             "obscura_binary": OBSCURA_BINARY,

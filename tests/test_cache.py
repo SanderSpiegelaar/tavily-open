@@ -2,7 +2,7 @@
 Tests for cache key generation.
 """
 
-from searcrawl.cache import CacheManager
+from trailsearch.cache import CacheManager
 
 
 def test_search_cache_key_includes_request_fingerprint():

@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 
 from redis.asyncio import Redis
 
-from searcrawl.local_index import CrawlJob
+from trailsearch.local_index import CrawlJob
 
 
 class RedisBackfillQueue:
@@ -20,7 +20,7 @@ class RedisBackfillQueue:
     def __init__(
         self,
         redis_client: Redis,
-        key_prefix: str = "searcrawl:backfill",
+        key_prefix: str = "trailsearch:backfill",
         claim_ttl_seconds: int = 900,
     ) -> None:
         self.redis = redis_client

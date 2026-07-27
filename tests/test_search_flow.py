@@ -8,7 +8,7 @@ import pytest
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
-import searcrawl.main as main_module
+import trailsearch.main as main_module
 
 
 class FakeProvider:
@@ -123,6 +123,7 @@ def test_crawl_mode_preserves_crawl_pipeline_and_adds_search_timings(client, mon
         raising=False,
     )
     monkeypatch.setattr(main_module, "cache_manager", None)
+    monkeypatch.setattr(main_module, "DEDUP_ENABLED", False)
     monkeypatch.setattr(main_module, "crawl", fake_crawl)
 
     response = client.post("/search", json={"query": "example", "provider": "brave"})
@@ -205,6 +206,48 @@ def test_tavily_search_returns_extracted_content_shape(client, monkeypatch):
     assert payload["results"][0]["source_stage"] == "reader"
     assert payload["results"][0]["raw_content"].startswith("Reader benchmark extraction")
     assert len(payload["results"][0]["chunks"]) == 1
+
+
+def test_tavily_search_mode_skips_crawling(client, monkeypatch):
+    """Tavily-like clients can explicitly request the low-latency search-only path."""
+    provider = FakeProvider(
+        SimpleNamespace(
+            provider="searxng",
+            request_ms=4.5,
+            hits=[
+                SimpleNamespace(
+                    url="https://example.com/fast",
+                    title="Fast Result",
+                    snippet="Provider snippet without page extraction",
+                    provider="searxng",
+                )
+            ],
+        )
+    )
+
+    async def fail_if_crawl_called(_request):
+        raise AssertionError("crawl should not run in Tavily search-only mode")
+
+    monkeypatch.setattr(
+        main_module,
+        "get_search_provider",
+        lambda provider_name, client: provider,
+        raising=False,
+    )
+    monkeypatch.setattr(main_module, "cache_manager", None)
+    monkeypatch.setattr(main_module, "crawl", fail_if_crawl_called)
+
+    response = client.post(
+        "/tavily/search",
+        json={"query": "fast lookup", "max_results": 1, "mode": "search"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["query"] == "fast lookup"
+    assert payload["results"][0]["source_stage"] == "searxng_search"
+    assert payload["results"][0]["content"] == "Provider snippet without page extraction"
+    assert payload["timings_ms"]["search_provider_request"] == 4.5
 
 
 def test_tavily_search_queues_failed_urls_for_backfill(client, monkeypatch):

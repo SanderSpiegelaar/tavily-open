@@ -1,0 +1,1729 @@
+{
+    "item":  [
+                 {
+                     "name":  "cache",
+                     "description":  "",
+                     "item":  [
+                                  {
+                                      "name":  "stats",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "6d19c7c1-9b19-460c-902c-3c551b85222d",
+                                                       "name":  "Get Cache Stats",
+                                                       "request":  {
+                                                                       "name":  "Get Cache Stats",
+                                                                       "description":  {
+                                                                                           "content":  "Get cache statistics endpoint\n\nReturns cache statistics including total entries and memory usage\n\nReturns:\n    Dict: Cache statistics",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "cache",
+                                                                                                "stats"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "GET",
+                                                                       "body":  {
+
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "605a8d27-2a4f-43c3-838e-82b509d65588",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "cache",
+                                                                                                                             "stats"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "GET",
+                                                                                                    "body":  {
+
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  },
+                                  {
+                                      "name":  "clear",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "1773b426-391b-4a0d-b0c8-875b718cacc7",
+                                                       "name":  "Clear Cache",
+                                                       "request":  {
+                                                                       "name":  "Clear Cache",
+                                                                       "description":  {
+                                                                                           "content":  "Clear all cache entries endpoint\n\nClears all cached crawl results\n\nReturns:\n    Dict: Operation result",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "cache",
+                                                                                                "clear"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "POST",
+                                                                       "body":  {
+
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "18e93773-d539-4196-a5cc-d6cf19766d7a",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "cache",
+                                                                                                                             "clear"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "backfill",
+                     "description":  "",
+                     "item":  [
+                                  {
+                                      "name":  "stats",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "7b5039d6-2776-49d0-9265-4210c0fcb2f9",
+                                                       "name":  "Get Backfill Stats",
+                                                       "request":  {
+                                                                       "name":  "Get Backfill Stats",
+                                                                       "description":  {
+                                                                                           "content":  "Return background crawl queue status.",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "backfill",
+                                                                                                "stats"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "GET",
+                                                                       "body":  {
+
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "5de8aaa0-8fb4-49c7-8993-1703d04765e6",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "backfill",
+                                                                                                                             "stats"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "GET",
+                                                                                                    "body":  {
+
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  },
+                                  {
+                                      "name":  "jobs",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "990412b5-bef8-4728-9ec7-2b84e13190b0",
+                                                       "name":  "List Backfill Jobs",
+                                                       "request":  {
+                                                                       "name":  "List Backfill Jobs",
+                                                                       "description":  {
+                                                                                           "content":  "List recent background crawl jobs.",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "backfill",
+                                                                                                "jobs"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+                                                                                                 {
+                                                                                                     "disabled":  false,
+                                                                                                     "description":  {
+                                                                                                                         "content":  "",
+                                                                                                                         "type":  "text/plain"
+                                                                                                                     },
+                                                                                                     "key":  "limit",
+                                                                                                     "value":  "50"
+                                                                                                 }
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "GET",
+                                                                       "body":  {
+
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "2d76bed8-7605-4b33-9b10-9b796c259e66",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "backfill",
+                                                                                                                             "jobs"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+                                                                                                                              {
+                                                                                                                                  "disabled":  false,
+                                                                                                                                  "description":  {
+                                                                                                                                                      "content":  "",
+                                                                                                                                                      "type":  "text/plain"
+                                                                                                                                                  },
+                                                                                                                                  "key":  "limit",
+                                                                                                                                  "value":  "50"
+                                                                                                                              }
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "GET",
+                                                                                                    "body":  {
+
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        },
+                                                                        {
+                                                                            "id":  "4235fb8e-5597-4517-9a83-df1f08b85d23",
+                                                                            "name":  "Validation Error",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "backfill",
+                                                                                                                             "jobs"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+                                                                                                                              {
+                                                                                                                                  "disabled":  false,
+                                                                                                                                  "description":  {
+                                                                                                                                                      "content":  "",
+                                                                                                                                                      "type":  "text/plain"
+                                                                                                                                                  },
+                                                                                                                                  "key":  "limit",
+                                                                                                                                  "value":  "50"
+                                                                                                                              }
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "GET",
+                                                                                                    "body":  {
+
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                                                            "code":  422,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    },\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    }\n  ]\n}",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  },
+                                  {
+                                      "name":  "enqueue",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "c5d74a0a-31ef-44fe-a308-3462bec1b021",
+                                                       "name":  "Enqueue Backfill",
+                                                       "request":  {
+                                                                       "name":  "Enqueue Backfill",
+                                                                       "description":  {
+                                                                                           "content":  "Manually enqueue URLs for asynchronous background crawl.",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "backfill",
+                                                                                                "enqueue"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Content-Type",
+                                                                                          "value":  "application/json"
+                                                                                      },
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "POST",
+                                                                       "body":  {
+                                                                                    "mode":  "raw",
+                                                                                    "raw":  "{\r\n    \"urls\":  [\r\n                 \"{{testUrl}}\"\r\n             ],\r\n    \"query\":  \"{{testQuery}}\",\r\n    \"reason\":  \"manual\"\r\n}",
+                                                                                    "options":  {
+                                                                                                    "raw":  {
+                                                                                                                "headerFamily":  "json",
+                                                                                                                "language":  "json"
+                                                                                                            }
+                                                                                                }
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "b6d6d2f2-1ef5-403d-8eee-a415ac35e8ea",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "backfill",
+                                                                                                                             "enqueue"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Content-Type",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+                                                                                                                 "mode":  "raw",
+                                                                                                                 "raw":  "{\n  \"urls\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"query\": \"\",\n  \"reason\": \"manual\"\n}",
+                                                                                                                 "options":  {
+                                                                                                                                 "raw":  {
+                                                                                                                                             "headerFamily":  "json",
+                                                                                                                                             "language":  "json"
+                                                                                                                                         }
+                                                                                                                             }
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        },
+                                                                        {
+                                                                            "id":  "f12ac192-e93f-473a-b2c9-ae15503e8b39",
+                                                                            "name":  "Validation Error",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "backfill",
+                                                                                                                             "enqueue"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Content-Type",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+                                                                                                                 "mode":  "raw",
+                                                                                                                 "raw":  "{\n  \"urls\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"query\": \"\",\n  \"reason\": \"manual\"\n}",
+                                                                                                                 "options":  {
+                                                                                                                                 "raw":  {
+                                                                                                                                             "headerFamily":  "json",
+                                                                                                                                             "language":  "json"
+                                                                                                                                         }
+                                                                                                                             }
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                                                            "code":  422,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    },\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    }\n  ]\n}",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  },
+                                  {
+                                      "name":  "run-once",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "43cc8c85-d9ee-48b4-aa16-81b7a816f1ab",
+                                                       "name":  "Run Backfill Once",
+                                                       "request":  {
+                                                                       "name":  "Run Backfill Once",
+                                                                       "description":  {
+                                                                                           "content":  "Run one due batch immediately.",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "backfill",
+                                                                                                "run-once"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "POST",
+                                                                       "body":  {
+
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "d8ed4209-a876-41d3-8855-5f0170fdd788",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "backfill",
+                                                                                                                             "run-once"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "registry",
+                     "description":  "",
+                     "item":  [
+                                  {
+                                      "name":  "services",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "name":  "{service_name}",
+                                                       "description":  "",
+                                                       "item":  [
+                                                                    {
+                                                                        "id":  "b8b6a557-56e7-40e8-8bbf-47909a7647f5",
+                                                                        "name":  "Discover Registry Service",
+                                                                        "request":  {
+                                                                                        "name":  "Discover Registry Service",
+                                                                                        "description":  {
+                                                                                                            "content":  "Return service instances discovered from etcd.",
+                                                                                                            "type":  "text/plain"
+                                                                                                        },
+                                                                                        "url":  {
+                                                                                                    "path":  [
+                                                                                                                 "registry",
+                                                                                                                 "services",
+                                                                                                                 ":service_name"
+                                                                                                             ],
+                                                                                                    "host":  [
+                                                                                                                 "{{baseUrl}}"
+                                                                                                             ],
+                                                                                                    "query":  [
+
+                                                                                                              ],
+                                                                                                    "variable":  [
+                                                                                                                     {
+                                                                                                                         "type":  "any",
+                                                                                                                         "value":  "crawler",
+                                                                                                                         "key":  "service_name",
+                                                                                                                         "disabled":  false,
+                                                                                                                         "description":  {
+                                                                                                                                             "content":  "(Required) ",
+                                                                                                                                             "type":  "text/plain"
+                                                                                                                                         }
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                },
+                                                                                        "header":  [
+                                                                                                       {
+                                                                                                           "key":  "Accept",
+                                                                                                           "value":  "application/json"
+                                                                                                       }
+                                                                                                   ],
+                                                                                        "method":  "GET",
+                                                                                        "body":  {
+
+                                                                                                 },
+                                                                                        "auth":  null
+                                                                                    },
+                                                                        "response":  [
+                                                                                         {
+                                                                                             "id":  "7b8b3b0d-2954-47eb-9c6f-f25c271c51a0",
+                                                                                             "name":  "Successful Response",
+                                                                                             "originalRequest":  {
+                                                                                                                     "url":  {
+                                                                                                                                 "path":  [
+                                                                                                                                              "registry",
+                                                                                                                                              "services",
+                                                                                                                                              ":service_name"
+                                                                                                                                          ],
+                                                                                                                                 "host":  [
+                                                                                                                                              "{{baseUrl}}"
+                                                                                                                                          ],
+                                                                                                                                 "query":  [
+
+                                                                                                                                           ],
+                                                                                                                                 "variable":  [
+                                                                                                                                                  {
+                                                                                                                                                      "disabled":  false,
+                                                                                                                                                      "description":  {
+                                                                                                                                                                          "content":  "(Required) ",
+                                                                                                                                                                          "type":  "text/plain"
+                                                                                                                                                                      },
+                                                                                                                                                      "type":  "any",
+                                                                                                                                                      "value":  "\u003cstring\u003e",
+                                                                                                                                                      "key":  "service_name"
+                                                                                                                                                  }
+                                                                                                                                              ]
+                                                                                                                             },
+                                                                                                                     "header":  [
+                                                                                                                                    {
+                                                                                                                                        "key":  "Accept",
+                                                                                                                                        "value":  "application/json"
+                                                                                                                                    }
+                                                                                                                                ],
+                                                                                                                     "method":  "GET",
+                                                                                                                     "body":  {
+
+                                                                                                                              }
+                                                                                                                 },
+                                                                                             "status":  "OK",
+                                                                                             "code":  200,
+                                                                                             "header":  [
+                                                                                                            {
+                                                                                                                "key":  "Content-Type",
+                                                                                                                "value":  "application/json"
+                                                                                                            }
+                                                                                                        ],
+                                                                                             "body":  "",
+                                                                                             "cookie":  [
+
+                                                                                                        ],
+                                                                                             "_postman_previewlanguage":  "json"
+                                                                                         },
+                                                                                         {
+                                                                                             "id":  "923bc0ad-e666-4c9e-b769-0cacbf60bf13",
+                                                                                             "name":  "Validation Error",
+                                                                                             "originalRequest":  {
+                                                                                                                     "url":  {
+                                                                                                                                 "path":  [
+                                                                                                                                              "registry",
+                                                                                                                                              "services",
+                                                                                                                                              ":service_name"
+                                                                                                                                          ],
+                                                                                                                                 "host":  [
+                                                                                                                                              "{{baseUrl}}"
+                                                                                                                                          ],
+                                                                                                                                 "query":  [
+
+                                                                                                                                           ],
+                                                                                                                                 "variable":  [
+                                                                                                                                                  {
+                                                                                                                                                      "disabled":  false,
+                                                                                                                                                      "description":  {
+                                                                                                                                                                          "content":  "(Required) ",
+                                                                                                                                                                          "type":  "text/plain"
+                                                                                                                                                                      },
+                                                                                                                                                      "type":  "any",
+                                                                                                                                                      "value":  "\u003cstring\u003e",
+                                                                                                                                                      "key":  "service_name"
+                                                                                                                                                  }
+                                                                                                                                              ]
+                                                                                                                             },
+                                                                                                                     "header":  [
+                                                                                                                                    {
+                                                                                                                                        "key":  "Accept",
+                                                                                                                                        "value":  "application/json"
+                                                                                                                                    }
+                                                                                                                                ],
+                                                                                                                     "method":  "GET",
+                                                                                                                     "body":  {
+
+                                                                                                                              }
+                                                                                                                 },
+                                                                                             "status":  "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                                                                             "code":  422,
+                                                                                             "header":  [
+                                                                                                            {
+                                                                                                                "key":  "Content-Type",
+                                                                                                                "value":  "application/json"
+                                                                                                            }
+                                                                                                        ],
+                                                                                             "body":  "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    },\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    }\n  ]\n}",
+                                                                                             "cookie":  [
+
+                                                                                                        ],
+                                                                                             "_postman_previewlanguage":  "json"
+                                                                                         }
+                                                                                     ],
+                                                                        "event":  [
+                                                                                      {
+                                                                                          "listen":  "test",
+                                                                                          "script":  {
+                                                                                                         "exec":  [
+                                                                                                                      "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                                      "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+                                                                                                                  ],
+                                                                                                         "type":  "text/javascript"
+                                                                                                     }
+                                                                                      }
+                                                                                  ],
+                                                                        "protocolProfileBehavior":  {
+                                                                                                        "disableBodyPruning":  true
+                                                                                                    }
+                                                                    }
+                                                                ]
+                                                   }
+                                               ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "search",
+                     "description":  "",
+                     "item":  [
+                                  {
+                                      "id":  "d4ed8992-6ae0-402a-a810-c11ec3e2a2db",
+                                      "name":  "Search",
+                                      "request":  {
+                                                      "name":  "Search",
+                                                      "description":  {
+                                                                          "content":  "Search API endpoint\n\nReceives search request, calls SearXNG search engine to get results,\nthen crawls the search result pages\n\nArgs:\n    request: Search request object containing query string and configuration parameters\n\nReturns:\n    Dict: Dictionary containing processed content, success count, and failed URLs\n\nRaises:\n    HTTPException: Raised when an error occurs during search or crawling",
+                                                                          "type":  "text/plain"
+                                                                      },
+                                                      "url":  {
+                                                                  "path":  [
+                                                                               "search"
+                                                                           ],
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "query":  [
+
+                                                                            ],
+                                                                  "variable":  [
+
+                                                                               ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Accept",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\r\n    \"query\":  \"{{testQuery}}\",\r\n    \"limit\":  3,\r\n    \"mode\":  \"search\",\r\n    \"provider\":  \"searxng\",\r\n    \"response_format\":  \"tavily\",\r\n    \"search_depth\":  \"basic\",\r\n    \"include_answer\":  false,\r\n    \"include_raw_content\":  false,\r\n    \"chunks_per_source\":  0,\r\n    \"include_domains\":  [\r\n\r\n                        ],\r\n    \"exclude_domains\":  [\r\n\r\n                        ]\r\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "headerFamily":  "json",
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "auth":  null
+                                                  },
+                                      "response":  [
+                                                       {
+                                                           "id":  "741ea21b-f226-4bef-b3c6-c3adefaec1ea",
+                                                           "name":  "Successful Response",
+                                                           "originalRequest":  {
+                                                                                   "url":  {
+                                                                                               "path":  [
+                                                                                                            "search"
+                                                                                                        ],
+                                                                                               "host":  [
+                                                                                                            "{{baseUrl}}"
+                                                                                                        ],
+                                                                                               "query":  [
+
+                                                                                                         ],
+                                                                                               "variable":  [
+
+                                                                                                            ]
+                                                                                           },
+                                                                                   "header":  [
+                                                                                                  {
+                                                                                                      "key":  "Content-Type",
+                                                                                                      "value":  "application/json"
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "key":  "Accept",
+                                                                                                      "value":  "application/json"
+                                                                                                  }
+                                                                                              ],
+                                                                                   "method":  "POST",
+                                                                                   "body":  {
+                                                                                                "mode":  "raw",
+                                                                                                "raw":  "{\n  \"query\": \"\u003cstring\u003e\",\n  \"limit\": 10,\n  \"disabled_engines\": \"wikipedia__general,currency__general,wikidata__general,duckduckgo__general,google__general,lingva__general,qwant__general,startpage__general,dictzone__general,mymemory translated__general,brave__general\",\n  \"enabled_engines\": \"baidu__general\",\n  \"mode\": \"crawl\",\n  \"provider\": \"router\",\n  \"response_format\": \"legacy\",\n  \"search_depth\": \"basic\",\n  \"include_answer\": false,\n  \"include_raw_content\": false,\n  \"chunks_per_source\": 0,\n  \"include_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"exclude_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"days\": \"\u003cinteger\u003e\",\n  \"topic\": \"\u003cstring\u003e\"\n}",
+                                                                                                "options":  {
+                                                                                                                "raw":  {
+                                                                                                                            "headerFamily":  "json",
+                                                                                                                            "language":  "json"
+                                                                                                                        }
+                                                                                                            }
+                                                                                            }
+                                                                               },
+                                                           "status":  "OK",
+                                                           "code":  200,
+                                                           "header":  [
+                                                                          {
+                                                                              "key":  "Content-Type",
+                                                                              "value":  "application/json"
+                                                                          }
+                                                                      ],
+                                                           "body":  "",
+                                                           "cookie":  [
+
+                                                                      ],
+                                                           "_postman_previewlanguage":  "json"
+                                                       },
+                                                       {
+                                                           "id":  "fb18a516-220c-43f5-b2ba-f2fb5a2a1212",
+                                                           "name":  "Validation Error",
+                                                           "originalRequest":  {
+                                                                                   "url":  {
+                                                                                               "path":  [
+                                                                                                            "search"
+                                                                                                        ],
+                                                                                               "host":  [
+                                                                                                            "{{baseUrl}}"
+                                                                                                        ],
+                                                                                               "query":  [
+
+                                                                                                         ],
+                                                                                               "variable":  [
+
+                                                                                                            ]
+                                                                                           },
+                                                                                   "header":  [
+                                                                                                  {
+                                                                                                      "key":  "Content-Type",
+                                                                                                      "value":  "application/json"
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "key":  "Accept",
+                                                                                                      "value":  "application/json"
+                                                                                                  }
+                                                                                              ],
+                                                                                   "method":  "POST",
+                                                                                   "body":  {
+                                                                                                "mode":  "raw",
+                                                                                                "raw":  "{\n  \"query\": \"\u003cstring\u003e\",\n  \"limit\": 10,\n  \"disabled_engines\": \"wikipedia__general,currency__general,wikidata__general,duckduckgo__general,google__general,lingva__general,qwant__general,startpage__general,dictzone__general,mymemory translated__general,brave__general\",\n  \"enabled_engines\": \"baidu__general\",\n  \"mode\": \"crawl\",\n  \"provider\": \"router\",\n  \"response_format\": \"legacy\",\n  \"search_depth\": \"basic\",\n  \"include_answer\": false,\n  \"include_raw_content\": false,\n  \"chunks_per_source\": 0,\n  \"include_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"exclude_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"days\": \"\u003cinteger\u003e\",\n  \"topic\": \"\u003cstring\u003e\"\n}",
+                                                                                                "options":  {
+                                                                                                                "raw":  {
+                                                                                                                            "headerFamily":  "json",
+                                                                                                                            "language":  "json"
+                                                                                                                        }
+                                                                                                            }
+                                                                                            }
+                                                                               },
+                                                           "status":  "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                                           "code":  422,
+                                                           "header":  [
+                                                                          {
+                                                                              "key":  "Content-Type",
+                                                                              "value":  "application/json"
+                                                                          }
+                                                                      ],
+                                                           "body":  "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    },\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    }\n  ]\n}",
+                                                           "cookie":  [
+
+                                                                      ],
+                                                           "_postman_previewlanguage":  "json"
+                                                       }
+                                                   ],
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                    "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                                                                                    "pm.test(\"Response contains results\", function () { var body = pm.response.json(); pm.expect(body.results).to.be.an(\"array\"); });"
+                                                                                ],
+                                                                       "type":  "text/javascript"
+                                                                   }
+                                                    }
+                                                ],
+                                      "protocolProfileBehavior":  {
+                                                                      "disableBodyPruning":  true
+                                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "tavily",
+                     "description":  "",
+                     "item":  [
+                                  {
+                                      "name":  "search",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "68e62549-077a-4282-a5dc-278116f75a32",
+                                                       "name":  "Tavily Search",
+                                                       "request":  {
+                                                                       "name":  "Tavily Search",
+                                                                       "description":  {
+                                                                                           "content":  "Tavily-like search endpoint with low-cost routing and extracted content.",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "tavily",
+                                                                                                "search"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Content-Type",
+                                                                                          "value":  "application/json"
+                                                                                      },
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "POST",
+                                                                       "body":  {
+                                                                                    "mode":  "raw",
+                                                                                    "raw":  "{\r\n    \"query\":  \"{{testQuery}}\",\r\n    \"max_results\":  1,\r\n    \"mode\":  \"crawl\",\r\n    \"search_depth\":  \"basic\",\r\n    \"include_answer\":  false,\r\n    \"include_raw_content\":  false,\r\n    \"chunks_per_source\":  0,\r\n    \"include_domains\":  [\r\n\r\n                        ],\r\n    \"exclude_domains\":  [\r\n\r\n                        ],\r\n    \"provider\":  \"searxng\"\r\n}",
+                                                                                    "options":  {
+                                                                                                    "raw":  {
+                                                                                                                "headerFamily":  "json",
+                                                                                                                "language":  "json"
+                                                                                                            }
+                                                                                                }
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "31713eea-9eb7-438d-bafe-dd71784f9af4",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "tavily",
+                                                                                                                             "search"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Content-Type",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+                                                                                                                 "mode":  "raw",
+                                                                                                                 "raw":  "{\n  \"query\": \"\u003cstring\u003e\",\n  \"max_results\": 10,\n  \"search_depth\": \"basic\",\n  \"include_answer\": false,\n  \"include_raw_content\": false,\n  \"chunks_per_source\": 0,\n  \"include_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"exclude_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"provider\": \"router\",\n  \"days\": \"\u003cinteger\u003e\",\n  \"topic\": \"\u003cstring\u003e\"\n}",
+                                                                                                                 "options":  {
+                                                                                                                                 "raw":  {
+                                                                                                                                             "headerFamily":  "json",
+                                                                                                                                             "language":  "json"
+                                                                                                                                         }
+                                                                                                                             }
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        },
+                                                                        {
+                                                                            "id":  "9efa6a13-a479-40ce-817c-8f9cb4b82e88",
+                                                                            "name":  "Validation Error",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "tavily",
+                                                                                                                             "search"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Content-Type",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+                                                                                                                 "mode":  "raw",
+                                                                                                                 "raw":  "{\n  \"query\": \"\u003cstring\u003e\",\n  \"max_results\": 10,\n  \"search_depth\": \"basic\",\n  \"include_answer\": false,\n  \"include_raw_content\": false,\n  \"chunks_per_source\": 0,\n  \"include_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"exclude_domains\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"provider\": \"router\",\n  \"days\": \"\u003cinteger\u003e\",\n  \"topic\": \"\u003cstring\u003e\"\n}",
+                                                                                                                 "options":  {
+                                                                                                                                 "raw":  {
+                                                                                                                                             "headerFamily":  "json",
+                                                                                                                                             "language":  "json"
+                                                                                                                                         }
+                                                                                                                             }
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                                                            "code":  422,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    },\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    }\n  ]\n}",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                                                                                                     "pm.test(\"Response contains results\", function () { var body = pm.response.json(); pm.expect(body.results).to.be.an(\"array\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  },
+                                  {
+                                      "name":  "extract",
+                                      "description":  "",
+                                      "item":  [
+                                                   {
+                                                       "id":  "73429a13-f0c7-455b-afb4-cb741ffce455",
+                                                       "name":  "Tavily Extract",
+                                                       "request":  {
+                                                                       "name":  "Tavily Extract",
+                                                                       "description":  {
+                                                                                           "content":  "Alias for clients that prefer Tavily-like route names.",
+                                                                                           "type":  "text/plain"
+                                                                                       },
+                                                                       "url":  {
+                                                                                   "path":  [
+                                                                                                "tavily",
+                                                                                                "extract"
+                                                                                            ],
+                                                                                   "host":  [
+                                                                                                "{{baseUrl}}"
+                                                                                            ],
+                                                                                   "query":  [
+
+                                                                                             ],
+                                                                                   "variable":  [
+
+                                                                                                ]
+                                                                               },
+                                                                       "header":  [
+                                                                                      {
+                                                                                          "key":  "Content-Type",
+                                                                                          "value":  "application/json"
+                                                                                      },
+                                                                                      {
+                                                                                          "key":  "Accept",
+                                                                                          "value":  "application/json"
+                                                                                      }
+                                                                                  ],
+                                                                       "method":  "POST",
+                                                                       "body":  {
+                                                                                    "mode":  "raw",
+                                                                                    "raw":  "{\r\n    \"urls\":  [\r\n                 \"{{testUrl}}\"\r\n             ],\r\n    \"query\":  \"reserved domains\",\r\n    \"include_raw_content\":  false,\r\n    \"chunks_per_source\":  0\r\n}",
+                                                                                    "options":  {
+                                                                                                    "raw":  {
+                                                                                                                "headerFamily":  "json",
+                                                                                                                "language":  "json"
+                                                                                                            }
+                                                                                                }
+                                                                                },
+                                                                       "auth":  null
+                                                                   },
+                                                       "response":  [
+                                                                        {
+                                                                            "id":  "5846584f-f12d-472a-887c-a37e3700f5d9",
+                                                                            "name":  "Successful Response",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "tavily",
+                                                                                                                             "extract"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Content-Type",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+                                                                                                                 "mode":  "raw",
+                                                                                                                 "raw":  "{\n  \"urls\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"query\": \"\",\n  \"include_raw_content\": true,\n  \"chunks_per_source\": 0\n}",
+                                                                                                                 "options":  {
+                                                                                                                                 "raw":  {
+                                                                                                                                             "headerFamily":  "json",
+                                                                                                                                             "language":  "json"
+                                                                                                                                         }
+                                                                                                                             }
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "OK",
+                                                                            "code":  200,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        },
+                                                                        {
+                                                                            "id":  "5e752add-0967-41d2-90ac-6671ae4ef291",
+                                                                            "name":  "Validation Error",
+                                                                            "originalRequest":  {
+                                                                                                    "url":  {
+                                                                                                                "path":  [
+                                                                                                                             "tavily",
+                                                                                                                             "extract"
+                                                                                                                         ],
+                                                                                                                "host":  [
+                                                                                                                             "{{baseUrl}}"
+                                                                                                                         ],
+                                                                                                                "query":  [
+
+                                                                                                                          ],
+                                                                                                                "variable":  [
+
+                                                                                                                             ]
+                                                                                                            },
+                                                                                                    "header":  [
+                                                                                                                   {
+                                                                                                                       "key":  "Content-Type",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "key":  "Accept",
+                                                                                                                       "value":  "application/json"
+                                                                                                                   }
+                                                                                                               ],
+                                                                                                    "method":  "POST",
+                                                                                                    "body":  {
+                                                                                                                 "mode":  "raw",
+                                                                                                                 "raw":  "{\n  \"urls\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"query\": \"\",\n  \"include_raw_content\": true,\n  \"chunks_per_source\": 0\n}",
+                                                                                                                 "options":  {
+                                                                                                                                 "raw":  {
+                                                                                                                                             "headerFamily":  "json",
+                                                                                                                                             "language":  "json"
+                                                                                                                                         }
+                                                                                                                             }
+                                                                                                             }
+                                                                                                },
+                                                                            "status":  "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                                                            "code":  422,
+                                                                            "header":  [
+                                                                                           {
+                                                                                               "key":  "Content-Type",
+                                                                                               "value":  "application/json"
+                                                                                           }
+                                                                                       ],
+                                                                            "body":  "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    },\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    }\n  ]\n}",
+                                                                            "cookie":  [
+
+                                                                                       ],
+                                                                            "_postman_previewlanguage":  "json"
+                                                                        }
+                                                                    ],
+                                                       "event":  [
+                                                                     {
+                                                                         "listen":  "test",
+                                                                         "script":  {
+                                                                                        "exec":  [
+                                                                                                     "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                                     "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                                                                                                     "pm.test(\"Response contains results\", function () { var body = pm.response.json(); pm.expect(body.results).to.be.an(\"array\"); });"
+                                                                                                 ],
+                                                                                        "type":  "text/javascript"
+                                                                                    }
+                                                                     }
+                                                                 ],
+                                                       "protocolProfileBehavior":  {
+                                                                                       "disableBodyPruning":  true
+                                                                                   }
+                                                   }
+                                               ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "extract",
+                     "description":  "",
+                     "item":  [
+                                  {
+                                      "id":  "8f8599ce-39c8-4310-b9e6-b341d48bd035",
+                                      "name":  "Extract",
+                                      "request":  {
+                                                      "name":  "Extract",
+                                                      "description":  {
+                                                                          "content":  "Extract clean content from known URLs and index successful pages.",
+                                                                          "type":  "text/plain"
+                                                                      },
+                                                      "url":  {
+                                                                  "path":  [
+                                                                               "extract"
+                                                                           ],
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "query":  [
+
+                                                                            ],
+                                                                  "variable":  [
+
+                                                                               ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Accept",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\r\n    \"urls\":  [\r\n                 \"{{testUrl}}\"\r\n             ],\r\n    \"query\":  \"reserved domains\",\r\n    \"include_raw_content\":  false,\r\n    \"chunks_per_source\":  0\r\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "headerFamily":  "json",
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "auth":  null
+                                                  },
+                                      "response":  [
+                                                       {
+                                                           "id":  "14824388-d5b8-498e-a9a0-84f8a53d56d2",
+                                                           "name":  "Successful Response",
+                                                           "originalRequest":  {
+                                                                                   "url":  {
+                                                                                               "path":  [
+                                                                                                            "extract"
+                                                                                                        ],
+                                                                                               "host":  [
+                                                                                                            "{{baseUrl}}"
+                                                                                                        ],
+                                                                                               "query":  [
+
+                                                                                                         ],
+                                                                                               "variable":  [
+
+                                                                                                            ]
+                                                                                           },
+                                                                                   "header":  [
+                                                                                                  {
+                                                                                                      "key":  "Content-Type",
+                                                                                                      "value":  "application/json"
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "key":  "Accept",
+                                                                                                      "value":  "application/json"
+                                                                                                  }
+                                                                                              ],
+                                                                                   "method":  "POST",
+                                                                                   "body":  {
+                                                                                                "mode":  "raw",
+                                                                                                "raw":  "{\n  \"urls\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"query\": \"\",\n  \"include_raw_content\": true,\n  \"chunks_per_source\": 0\n}",
+                                                                                                "options":  {
+                                                                                                                "raw":  {
+                                                                                                                            "headerFamily":  "json",
+                                                                                                                            "language":  "json"
+                                                                                                                        }
+                                                                                                            }
+                                                                                            }
+                                                                               },
+                                                           "status":  "OK",
+                                                           "code":  200,
+                                                           "header":  [
+                                                                          {
+                                                                              "key":  "Content-Type",
+                                                                              "value":  "application/json"
+                                                                          }
+                                                                      ],
+                                                           "body":  "",
+                                                           "cookie":  [
+
+                                                                      ],
+                                                           "_postman_previewlanguage":  "json"
+                                                       },
+                                                       {
+                                                           "id":  "a7057221-3183-4f6c-897a-a878ce2ee25b",
+                                                           "name":  "Validation Error",
+                                                           "originalRequest":  {
+                                                                                   "url":  {
+                                                                                               "path":  [
+                                                                                                            "extract"
+                                                                                                        ],
+                                                                                               "host":  [
+                                                                                                            "{{baseUrl}}"
+                                                                                                        ],
+                                                                                               "query":  [
+
+                                                                                                         ],
+                                                                                               "variable":  [
+
+                                                                                                            ]
+                                                                                           },
+                                                                                   "header":  [
+                                                                                                  {
+                                                                                                      "key":  "Content-Type",
+                                                                                                      "value":  "application/json"
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "key":  "Accept",
+                                                                                                      "value":  "application/json"
+                                                                                                  }
+                                                                                              ],
+                                                                                   "method":  "POST",
+                                                                                   "body":  {
+                                                                                                "mode":  "raw",
+                                                                                                "raw":  "{\n  \"urls\": [\n    \"\u003cstring\u003e\",\n    \"\u003cstring\u003e\"\n  ],\n  \"query\": \"\",\n  \"include_raw_content\": true,\n  \"chunks_per_source\": 0\n}",
+                                                                                                "options":  {
+                                                                                                                "raw":  {
+                                                                                                                            "headerFamily":  "json",
+                                                                                                                            "language":  "json"
+                                                                                                                        }
+                                                                                                            }
+                                                                                            }
+                                                                               },
+                                                           "status":  "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                                           "code":  422,
+                                                           "header":  [
+                                                                          {
+                                                                              "key":  "Content-Type",
+                                                                              "value":  "application/json"
+                                                                          }
+                                                                      ],
+                                                           "body":  "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    },\n    {\n      \"loc\": [\n        \"\u003cstring\u003e\",\n        \"\u003cstring\u003e\"\n      ],\n      \"msg\": \"\u003cstring\u003e\",\n      \"type\": \"\u003cstring\u003e\"\n    }\n  ]\n}",
+                                                           "cookie":  [
+
+                                                                      ],
+                                                           "_postman_previewlanguage":  "json"
+                                                       }
+                                                   ],
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Status code is 2xx\", function () { pm.expect(pm.response.code).to.be.within(200, 299); });",
+                                                                                    "pm.test(\"Response is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                                                                                    "pm.test(\"Response contains results\", function () { var body = pm.response.json(); pm.expect(body.results).to.be.an(\"array\"); });"
+                                                                                ],
+                                                                       "type":  "text/javascript"
+                                                                   }
+                                                    }
+                                                ],
+                                      "protocolProfileBehavior":  {
+                                                                      "disableBodyPruning":  true
+                                                                  }
+                                  }
+                              ]
+                 }
+             ],
+    "event":  [
+
+              ],
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "value":  "http://127.0.0.1:8000",
+                         "type":  "string"
+                     },
+                     {
+                         "key":  "testQuery",
+                         "value":  "OpenAI Codex",
+                         "type":  "string"
+                     },
+                     {
+                         "key":  "testUrl",
+                         "value":  "https://www.iana.org/domains/reserved",
+                         "type":  "string"
+                     }
+                 ],
+    "info":  {
+                 "_postman_id":  "cdf45658-4f83-46ce-964a-71fbb4bcc9d5",
+                 "name":  "TrailSearch API",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+                 "description":  "TrailSearch API requests for local WSL, demo, and self-hosted deployments. Change the baseUrl collection variable to target another deployment. Tavily-compatible routes are retained for client compatibility."
+             }
+}

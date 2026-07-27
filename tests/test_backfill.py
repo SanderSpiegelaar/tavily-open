@@ -4,8 +4,8 @@ Tests for the background backfill worker.
 
 import pytest
 
-from searcrawl.backfill import BackfillWorker
-from searcrawl.local_index import LocalIndex
+from trailsearch.backfill import BackfillWorker
+from trailsearch.local_index import LocalIndex
 
 
 class FakeCrawler:
@@ -26,7 +26,7 @@ class FakeCrawler:
 @pytest.mark.asyncio
 async def test_backfill_worker_indexes_successful_job(tmp_path):
     """A successful backfill job should write content and mark the job succeeded."""
-    index = LocalIndex(str(tmp_path / "searcrawl.sqlite3"))
+    index = LocalIndex(str(tmp_path / "trailsearch.sqlite3"))
     await index.initialize()
     try:
         await index.enqueue_crawl_jobs(
