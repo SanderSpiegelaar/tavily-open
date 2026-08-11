@@ -1,6 +1,8 @@
+name: trailsearch-distributed
+
 services:
   redis:
-    image: redis:7-alpine
+    image: ${REDIS_IMAGE:-public.ecr.aws/docker/library/redis:7-alpine}
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
@@ -33,23 +35,28 @@ services:
       retries: 10
     restart: unless-stopped
 
+  searxng:
+    image: ${SEARXNG_IMAGE:-ghcr.io/searxng/searxng:latest}
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      SEARXNG_BASE_URL: http://localhost:8080/
+      SEARXNG_SECRET: ${SEARXNG_SECRET:-ultrasecretkey}
+    restart: unless-stopped
+
   reader-1:
     image: ${READER_IMAGE:-ghcr.io/intergalacticalvariable/reader:latest}
     volumes:
       - reader_1_data:/app/local-storage
-    expose:
-      - "3000"
     restart: unless-stopped
 
   reader-2:
     image: ${READER_IMAGE:-ghcr.io/intergalacticalvariable/reader:latest}
     volumes:
       - reader_2_data:/app/local-storage
-    expose:
-      - "3000"
     restart: unless-stopped
 
-  open-tavily:
+  trailsearch:
     build:
       context: .
       args:
@@ -59,9 +66,9 @@ services:
     env_file:
       - .env
     environment: &distributed-env
-      SERVICE_URL_OPEN-TAVILY_3000:
+      SERVICE_URL_TRAILSEARCH_3000
       REDIS_URL: redis://redis:6379/0
-      SEARXNG_URL: ${SEARCH_XNG_URL}
+      SEARXNG_URL: http://searxng:8080
       SEARCH_PROVIDER: router
       LOCAL_INDEX_ENABLED: "true"
       LOCAL_INDEX_PATH: /app/data/trailsearch.sqlite3
